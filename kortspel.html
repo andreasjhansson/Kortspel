@@ -1,0 +1,624 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Kortspelet</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.7.0/dist/tabler-icons.min.css"/>
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23534AB7'/%3E%3Crect x='8' y='14' width='26' height='36' rx='5' fill='white' opacity='0.95'/%3E%3Crect x='20' y='18' width='26' height='36' rx='5' fill='%23EEEdFE' stroke='white' stroke-width='1.5'/%3E%3Ctext x='26' y='40' font-family='serif' font-size='18' font-weight='bold' fill='%23534AB7'%3E%E2%99%A0%3C/text%3E%3Ctext x='11' y='30' font-family='serif' font-size='13' font-weight='bold' fill='%23534AB7'%3EA%3C/text%3E%3C/svg%3E"/>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --accent:#534AB7;--accent-light:#EEEDFE;--accent-dark:#26215C;
+  --bg:#ffffff;--bg2:#f6f6f4;--bg3:#efede8;
+  --text:#1a1a1a;--text2:#6b6b6b;--text3:#9a9a9a;
+  --border:rgba(0,0,0,0.1);--border2:rgba(0,0,0,0.2);
+  --r:12px;--rm:8px;
+  --teal:#0F6E56;--red:#A32D2D;--red-bg:#FCEBEB;
+  --warn-bg:#FAEEDA;--warn-text:#633806;
+  --green:#0F6E56;--green-bg:#E1F5EE;
+}
+@media(prefers-color-scheme:dark){
+  :root{
+    --bg:#1e1e1e;--bg2:#272727;--bg3:#1a1a1a;
+    --text:#e8e8e8;--text2:#a0a0a0;--text3:#5a5a5a;
+    --border:rgba(255,255,255,0.1);--border2:rgba(255,255,255,0.22);
+    --accent-light:#2a2660;--accent-dark:#c8c3f8;
+    --teal:#5DCAA5;--red:#F09595;--red-bg:#3a1a1a;
+    --warn-bg:#3a2e10;--warn-text:#FAC775;
+    --green:#5DCAA5;--green-bg:#0d2e24;
+  }
+}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:var(--bg3);color:var(--text);min-height:100vh}
+.shell{max-width:640px;margin:0 auto;padding:1.25rem 1rem 3rem}
+.topbar{display:flex;align-items:center;justify-content:space-between;margin-bottom:1.5rem}
+.brand{display:flex;align-items:center;gap:11px}
+.brand-icon{width:38px;height:38px;border-radius:10px;overflow:hidden;flex-shrink:0}
+.brand-icon svg{display:block;width:100%;height:100%}
+.brand-name{font-size:17px;font-weight:600;color:var(--text)}
+.brand-sub{font-size:12px;color:var(--text2)}
+.sync-area{display:flex;align-items:center;gap:8px}
+.sync-status{font-size:12px;color:var(--text2);display:flex;align-items:center;gap:5px}
+.sync-dot{width:7px;height:7px;border-radius:50%;background:var(--text3);flex-shrink:0}
+.sync-dot.ok{background:#3BAA77}
+.sync-dot.err{background:#E24B4A}
+.sync-dot.spin{background:var(--accent);animation:pulse 1s infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.3}}
+.icon-btn{background:none;border:0.5px solid var(--border);border-radius:var(--rm);width:34px;height:34px;cursor:pointer;display:flex;align-items:center;justify-content:center;color:var(--text2);font-size:16px;transition:all .15s}
+.icon-btn:hover{background:var(--bg2);color:var(--text)}
+
+.nav{display:flex;gap:2px;background:var(--bg2);border-radius:var(--r);padding:3px;margin-bottom:1.5rem;border:0.5px solid var(--border)}
+.nav-btn{flex:1;padding:8px 4px;border:none;background:transparent;border-radius:10px;font-size:12px;font-weight:500;color:var(--text2);cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:3px;line-height:1;transition:all .15s}
+.nav-btn i{font-size:17px}
+.nav-btn.active{background:var(--bg);color:var(--accent);border:0.5px solid var(--border);box-shadow:0 1px 3px rgba(0,0,0,.06)}
+
+.section{display:none}.section.active{display:block}
+.ph{margin-bottom:1.25rem}
+.ph-title{font-size:20px;font-weight:600;color:var(--text);margin-bottom:2px}
+.ph-sub{font-size:13px;color:var(--text2)}
+
+/* inputs */
+input[type=text],input[type=password],input[type=number]{padding:9px 12px;border-radius:var(--rm);border:0.5px solid var(--border2);background:var(--bg);color:var(--text);font-size:14px;outline:none;font-family:inherit;width:100%}
+input:focus{border-color:var(--accent);box-shadow:0 0 0 3px rgba(83,74,183,.14)}
+
+.add-row{display:flex;gap:8px;margin-bottom:1.25rem}
+.add-row input{flex:1;min-width:0;width:auto}
+.btn-primary{background:var(--accent);color:#fff;border:none;border-radius:var(--rm);padding:0 16px;height:38px;font-size:13px;font-weight:600;cursor:pointer;display:inline-flex;align-items:center;gap:6px;white-space:nowrap;transition:opacity .15s;font-family:inherit}
+.btn-primary:hover{opacity:.86}
+.btn-primary:disabled{opacity:.5;cursor:not-allowed}
+.btn-ghost{background:none;border:0.5px solid var(--border2);border-radius:var(--rm);padding:7px 14px;font-size:13px;color:var(--text2);cursor:pointer;display:inline-flex;align-items:center;gap:6px;font-family:inherit;transition:background .12s}
+.btn-ghost:hover{background:var(--bg2)}
+.btn-danger{background:none;border:0.5px solid var(--border);border-radius:var(--rm);padding:7px 14px;font-size:13px;color:var(--red);cursor:pointer;display:inline-flex;align-items:center;gap:6px;font-family:inherit}
+.btn-danger:hover{background:var(--red-bg)}
+
+/* players */
+.pgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(148px,1fr));gap:8px;margin-bottom:1rem}
+.pchip{background:var(--bg);border:0.5px solid var(--border);border-radius:var(--r);padding:14px 12px;display:flex;flex-direction:column;align-items:center;gap:8px;cursor:pointer;transition:all .15s;position:relative}
+.pchip:hover{border-color:var(--border2)}
+.pchip.sel{border:1.5px solid var(--accent);background:var(--accent-light)}
+.pchip.sel .pname{color:var(--accent-dark)}
+.av{border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:600;flex-shrink:0}
+.pname{font-size:13px;font-weight:600;color:var(--text);text-align:center;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;width:100%}
+.psub{font-size:11px;color:var(--text2)}
+.pdel{position:absolute;top:6px;right:6px;background:none;border:none;cursor:pointer;opacity:0;color:var(--text3);font-size:15px;padding:2px;border-radius:4px;transition:opacity .12s}
+.pchip:hover .pdel{opacity:.7}
+.pdel:hover{opacity:1!important;color:var(--red)}
+.sel-check{position:absolute;top:7px;left:7px;width:17px;height:17px;background:var(--accent);border-radius:50%;display:none;align-items:center;justify-content:center;color:#fff;font-size:10px}
+.pchip.sel .sel-check{display:flex}
+
+/* game */
+.rcard{background:var(--bg);border:0.5px solid var(--border);border-radius:var(--r);margin-bottom:8px;overflow:hidden}
+.rcard-head{display:flex;align-items:center;justify-content:space-between;padding:12px 14px;border-bottom:0.5px solid var(--border);background:var(--bg2)}
+.rcard-title{font-size:13px;font-weight:600;color:var(--text)}
+.rcard-desc{font-size:12px;color:var(--text2)}
+.rpill{background:var(--accent-light);color:var(--accent-dark);font-size:11px;font-weight:600;padding:3px 9px;border-radius:20px}
+.srow{display:flex;align-items:center;justify-content:space-between;padding:10px 14px;border-bottom:0.5px solid var(--border)}
+.srow:last-child{border-bottom:none}
+.splayer{display:flex;align-items:center;gap:9px;font-size:13px;font-weight:500;color:var(--text)}
+.sinput{width:68px;text-align:center;font-size:14px;font-weight:600;padding:6px 8px;border-radius:var(--rm);border:0.5px solid var(--border2);background:var(--bg2);color:var(--text);outline:none;transition:border-color .12s}
+.sinput:focus{border-color:var(--accent);background:var(--bg);box-shadow:0 0 0 3px rgba(83,74,183,.12)}
+.standings{border:0.5px solid var(--border);border-radius:var(--r);overflow:hidden;margin:1rem 0}
+.st-head{padding:10px 14px;background:var(--bg2);border-bottom:0.5px solid var(--border);font-size:12px;font-weight:600;color:var(--text2)}
+.strow{display:flex;align-items:center;justify-content:space-between;padding:10px 14px;border-bottom:0.5px solid var(--border)}
+.strow:last-child{border-bottom:none}
+.strow.top{background:var(--accent-light)}
+.stleft{display:flex;align-items:center;gap:10px}
+.strank{font-size:16px;width:22px;text-align:center}
+.stname{font-size:13px;font-weight:500;color:var(--text)}
+.stscore{font-size:18px;font-weight:600;color:var(--text)}
+.strow.top .stname,.strow.top .stscore{color:var(--accent-dark)}
+.save-btn{width:100%;padding:13px;background:var(--accent);color:#fff;border:none;border-radius:var(--r);font-size:14px;font-weight:600;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px;margin-top:1rem;transition:opacity .15s;font-family:inherit}
+.save-btn:hover{opacity:.86}
+
+/* history */
+.gcard{background:var(--bg);border:0.5px solid var(--border);border-radius:var(--r);padding:14px;margin-bottom:8px;display:flex;align-items:center;justify-content:space-between;cursor:pointer;transition:all .15s}
+.gcard:hover{border-color:var(--border2);background:var(--bg2)}
+.gdate{font-size:11px;color:var(--text2);margin-bottom:3px}
+.gplayers{font-size:13px;font-weight:500;color:var(--text)}
+.gwinner{font-size:12px;color:var(--teal);display:flex;align-items:center;gap:4px;margin-top:2px}
+.gscore{font-size:16px;font-weight:600;color:var(--text)}
+.det-table{width:100%;border-collapse:collapse;table-layout:fixed;font-size:13px}
+.det-table th{font-size:11px;font-weight:600;color:var(--text2);padding:0 6px 8px;text-align:center}
+.det-table th:first-child{text-align:left;padding-left:0}
+.det-table th:last-child{text-align:right}
+.det-table td{padding:9px 6px;border-top:0.5px solid var(--border);text-align:center;color:var(--text2)}
+.det-table td:first-child{text-align:left;padding-left:0;font-weight:500;color:var(--text)}
+.det-table td:last-child{font-weight:600;color:var(--text);text-align:right}
+
+/* stats */
+.stat-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:1.25rem}
+.scard{background:var(--bg2);border-radius:var(--rm);padding:14px}
+.scard-label{font-size:11px;color:var(--text2);margin-bottom:4px}
+.scard-val{font-size:22px;font-weight:600;color:var(--text)}
+.scard-sub{font-size:11px;color:var(--text2);margin-top:2px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.lb-card{background:var(--bg);border:0.5px solid var(--border);border-radius:var(--r);padding:0 14px}
+.lbrow{display:flex;align-items:center;justify-content:space-between;padding:10px 0;border-bottom:0.5px solid var(--border)}
+.lbrow:last-child{border-bottom:none}
+.lbleft{display:flex;align-items:center;gap:10px}
+.lbrank{font-size:15px;width:24px;text-align:center}
+.lbname{font-size:13px;font-weight:600;color:var(--text)}
+.lbsub{font-size:11px;color:var(--text2)}
+.lbwins{font-size:14px;font-weight:600;color:var(--text)}
+.lbgames{font-size:11px;color:var(--text2);text-align:right}
+
+/* modal */
+.modal-backdrop{position:fixed;inset:0;background:rgba(0,0,0,.45);z-index:100;display:none;align-items:flex-end;justify-content:center;padding:0}
+.modal-backdrop.open{display:flex}
+@media(min-width:520px){.modal-backdrop{align-items:center;padding:1rem}}
+.modal{background:var(--bg);border-radius:var(--r) var(--r) 0 0;width:100%;max-width:540px;padding:1.5rem 1.25rem 2rem;position:relative}
+@media(min-width:520px){.modal{border-radius:var(--r)}}
+.modal-title{font-size:17px;font-weight:600;color:var(--text);margin-bottom:4px}
+.modal-sub{font-size:13px;color:var(--text2);margin-bottom:1.25rem}
+.modal-close{position:absolute;top:14px;right:14px;background:none;border:none;font-size:20px;color:var(--text2);cursor:pointer}
+.form-label{font-size:12px;font-weight:600;color:var(--text2);margin-bottom:5px;display:block}
+.form-group{margin-bottom:1rem}
+.form-hint{font-size:12px;color:var(--text3);margin-top:5px}
+.form-hint a{color:var(--accent);text-decoration:none}
+.form-hint a:hover{text-decoration:underline}
+.sync-actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:1.25rem}
+.info-box{background:var(--bg2);border-radius:var(--rm);padding:12px 14px;font-size:13px;color:var(--text2);margin-bottom:1rem;line-height:1.6}
+.info-box strong{color:var(--text);font-weight:600}
+.copy-row{display:flex;gap:8px;align-items:center}
+.copy-row input{flex:1;font-size:12px;font-family:monospace;background:var(--bg2)}
+
+/* misc */
+.empty{text-align:center;padding:2.5rem 1rem;color:var(--text2);font-size:13px}
+.empty i{font-size:32px;display:block;margin-bottom:10px;opacity:.35}
+.warn{background:var(--warn-bg);color:var(--warn-text);font-size:13px;padding:10px 14px;border-radius:var(--rm);margin-bottom:1rem;display:flex;align-items:center;gap:8px}
+.ok-box{background:var(--green-bg);color:var(--green);font-size:13px;padding:10px 14px;border-radius:var(--rm);margin-bottom:1rem;display:flex;align-items:center;gap:8px}
+.sec-label{font-size:12px;font-weight:600;color:var(--text2);margin:1.25rem 0 .6rem;letter-spacing:.01em}
+.divider{border:none;border-top:0.5px solid var(--border);margin:1.25rem 0}
+input[type=number]::-webkit-inner-spin-button,input[type=number]::-webkit-outer-spin-button{-webkit-appearance:none}
+input[type=number]{-moz-appearance:textfield}
+</style>
+</head>
+<body>
+<div class="shell">
+
+<!-- Topbar -->
+<div class="topbar">
+  <div class="brand">
+    <div class="brand-icon">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+        <rect width="64" height="64" rx="14" fill="#534AB7"/>
+        <!-- back card -->
+        <rect x="8" y="15" width="26" height="36" rx="5" fill="white" opacity="0.92"/>
+        <!-- front card -->
+        <rect x="20" y="19" width="26" height="36" rx="5" fill="#EEEDFE" stroke="white" stroke-width="1.5"/>
+        <!-- spade suit -->
+        <text x="26" y="42" font-family="serif" font-size="19" font-weight="bold" fill="#534AB7">♠</text>
+        <!-- A letter -->
+        <text x="22" y="30" font-family="serif" font-size="11" font-weight="bold" fill="#534AB7">A</text>
+      </svg>
+    </div>
+    <div>
+      <div class="brand-name">Kortspelet</div>
+      <div class="brand-sub">6 omgångar &middot; poäng &amp; statistik</div>
+    </div>
+  </div>
+  <div class="sync-area">
+    <div class="sync-status" id="syncStatus">
+      <span class="sync-dot" id="syncDot"></span>
+      <span id="syncLabel">Ej konfigurerad</span>
+    </div>
+    <button class="icon-btn" onclick="openSettings()" title="GitHub-synk &amp; inställningar"><i class="ti ti-settings"></i></button>
+  </div>
+</div>
+
+<!-- Nav -->
+<div class="nav">
+  <button class="nav-btn active" onclick="nav('players',this)"><i class="ti ti-users"></i>Spelare</button>
+  <button class="nav-btn" onclick="nav('game',this)"><i class="ti ti-device-gamepad-2"></i>Spel</button>
+  <button class="nav-btn" onclick="nav('history',this)"><i class="ti ti-history"></i>Historik</button>
+  <button class="nav-btn" onclick="nav('stats',this)"><i class="ti ti-chart-bar"></i>Statistik</button>
+</div>
+
+<!-- PLAYERS -->
+<div id="s-players" class="section active">
+  <div class="ph"><div class="ph-title">Spelare</div><div class="ph-sub">Välj spelare för nästa spel (lila = vald).</div></div>
+  <div class="add-row">
+    <input type="text" id="npn" placeholder="Lägg till spelare..." maxlength="20"/>
+    <button class="btn-primary" onclick="createPlayer()"><i class="ti ti-plus"></i>Lägg till</button>
+  </div>
+  <div id="pgrid" class="pgrid"></div>
+  <div id="pempty" class="empty" style="display:none"><i class="ti ti-user-plus"></i>Inga spelare ännu — lägg till din första</div>
+</div>
+
+<!-- GAME -->
+<div id="s-game" class="section">
+  <div class="ph"><div class="ph-title">Aktivt spel</div><div class="ph-sub">Fyll i poäng per omgång.</div></div>
+  <div id="gwarn" class="warn" style="display:none"><i class="ti ti-alert-triangle"></i>Välj minst 2 spelare i fliken Spelare.</div>
+  <div id="gcontent"></div>
+</div>
+
+<!-- HISTORY -->
+<div id="s-history" class="section">
+  <div id="hmain">
+    <div class="ph"><div class="ph-title">Historik</div><div class="ph-sub">Klicka på ett spel för detaljer.</div></div>
+    <div id="hlist"></div>
+    <div id="hempty" class="empty" style="display:none"><i class="ti ti-database-off"></i>Inga sparade spel ännu</div>
+  </div>
+  <div id="hdetail" style="display:none"></div>
+</div>
+
+<!-- STATS -->
+<div id="s-stats" class="section">
+  <div class="ph"><div class="ph-title">Statistik</div><div class="ph-sub">Sammanställning av alla spel.</div></div>
+  <div id="scontent"></div>
+</div>
+
+<!-- SETTINGS MODAL -->
+<div class="modal-backdrop" id="settingsModal" onclick="handleBackdropClick(event)">
+  <div class="modal">
+    <button class="modal-close" onclick="closeSettings()"><i class="ti ti-x"></i></button>
+    <div class="modal-title"><i class="ti ti-brand-github" style="font-size:18px;vertical-align:middle;margin-right:6px"></i>GitHub Gist-synk</div>
+    <div class="modal-sub">Synka data mellan enheter via ett privat GitHub Gist.</div>
+
+    <div class="info-box">
+      <strong>Så här fungerar det:</strong><br>
+      1. Skapa ett <a href="https://github.com/settings/tokens/new?scopes=gist&description=Kortspelet" target="_blank">GitHub Personal Access Token</a> med <code>gist</code>-behörighet.<br>
+      2. Klistra in token nedan och klicka <strong>Skapa Gist</strong>.<br>
+      3. Kopiera Gist-ID och ange det på dina andra enheter.
+    </div>
+
+    <div class="form-group">
+      <label class="form-label">GitHub Personal Access Token</label>
+      <input type="password" id="ghToken" placeholder="ghp_xxxxxxxxxxxxxxxxxxxx"/>
+      <div class="form-hint">Sparas bara lokalt i webbläsaren. <a href="https://github.com/settings/tokens/new?scopes=gist&description=Kortspelet" target="_blank">Skapa token →</a></div>
+    </div>
+
+    <div class="form-group">
+      <label class="form-label">Gist ID <span style="font-weight:400;color:var(--text3)">(lämna tomt för att skapa nytt)</span></label>
+      <div class="copy-row">
+        <input type="text" id="ghGistId" placeholder="abc123def456..."/>
+        <button class="icon-btn" onclick="copyGistId()" title="Kopiera Gist-ID"><i class="ti ti-copy"></i></button>
+      </div>
+      <div class="form-hint">Ange samma Gist-ID på alla enheter som ska synka.</div>
+    </div>
+
+    <div id="syncMsg"></div>
+
+    <div class="sync-actions">
+      <button class="btn-primary" onclick="doSync('push')"><i class="ti ti-cloud-upload"></i>Ladda upp</button>
+      <button class="btn-primary" onclick="doSync('pull')" style="background:var(--bg2);color:var(--text);border:0.5px solid var(--border2)"><i class="ti ti-cloud-download"></i>Ladda ner</button>
+      <button class="btn-ghost" onclick="saveSettings()"><i class="ti ti-device-floppy"></i>Spara inställningar</button>
+    </div>
+
+    <hr class="divider"/>
+    <div style="font-size:12px;color:var(--text3)">Din data lagras i ett <strong>privat</strong> Gist på ditt GitHub-konto. Ingen utomstående kan se den.</div>
+  </div>
+</div>
+
+</div><!-- /shell -->
+
+<script>
+/* ── Constants ── */
+const ROUNDS=[
+  {name:'Omgång 1',desc:'2 triss'},{name:'Omgång 2',desc:'2 flush'},
+  {name:'Omgång 3',desc:'1 + 1'},{name:'Omgång 4',desc:'3 triss'},
+  {name:'Omgång 5',desc:'3 flush'},{name:'Omgång 6',desc:'2 + 1'}
+];
+const AV=[
+  ['#EEEDFE','#3C3489'],['#E1F5EE','#085041'],['#FAECE7','#712B13'],
+  ['#E6F1FB','#0C447C'],['#FBEAF0','#72243E'],['#FAEEDA','#633806'],
+  ['#EAF3DE','#27500A'],['#FCEBEB','#791F1F']
+];
+const KEY='kortspel_app';
+const CFG_KEY='kortspel_cfg';
+const GIST_FILENAME='kortspel_data.json';
+const MEDALS=['🥇','🥈','🥉'];
+
+/* ── State ── */
+let db={players:[],games:[]};
+let sel=new Set();
+let cur={};
+let cfg={token:'',gistId:''};
+
+/* ── Persistence ── */
+function loadLocal(){
+  try{const r=localStorage.getItem(KEY);if(r)db=JSON.parse(r);}catch(e){db={players:[],games:[]};}
+  try{const c=localStorage.getItem(CFG_KEY);if(c)cfg=JSON.parse(c);}catch(e){}
+}
+function saveLocal(){
+  try{localStorage.setItem(KEY,JSON.stringify(db));}catch(e){}
+}
+function saveCfg(){
+  try{localStorage.setItem(CFG_KEY,JSON.stringify(cfg));}catch(e){}
+}
+
+/* ── Helpers ── */
+function inits(n){return n.trim().split(/\s+/).map(w=>w[0]).join('').toUpperCase().slice(0,2)||'?';}
+function avc(i){return AV[((i%AV.length)+AV.length)%AV.length];}
+function pidx(id){return db.players.findIndex(p=>p.id===id);}
+function gtotal(id){if(!cur[id])return 0;return cur[id].reduce((s,v)=>{const n=parseInt(v);return s+(isNaN(n)?0:n);},0);}
+function avEl(name,idx,w,fs){const[bg,fg]=avc(idx);return`<div class="av" style="background:${bg};color:${fg};width:${w}px;height:${w}px;font-size:${fs}px">${inits(name)}</div>`;}
+
+/* ── Navigation ── */
+function nav(name,btn){
+  document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));
+  document.querySelectorAll('.nav-btn').forEach(b=>b.classList.remove('active'));
+  document.getElementById('s-'+name).classList.add('active');
+  btn.classList.add('active');
+  if(name==='game')renderGame();
+  if(name==='history'){document.getElementById('hmain').style.display='block';document.getElementById('hdetail').style.display='none';renderHistory();}
+  if(name==='stats')renderStats();
+}
+
+/* ── Players ── */
+function createPlayer(){
+  const inp=document.getElementById('npn');
+  const name=inp.value.trim();
+  if(!name||db.players.find(p=>p.name.toLowerCase()===name.toLowerCase()))return;
+  db.players.push({id:Date.now()+'_'+Math.random().toString(36).slice(2),name,created:Date.now()});
+  inp.value='';saveLocal();renderPlayers();
+}
+function toggleSel(id){sel.has(id)?sel.delete(id):sel.add(id);renderPlayers();}
+function delPlayer(id){
+  if(!confirm('Ta bort spelare?'))return;
+  db.players=db.players.filter(p=>p.id!==id);sel.delete(id);saveLocal();renderPlayers();
+}
+function renderPlayers(){
+  const g=document.getElementById('pgrid'),e=document.getElementById('pempty');
+  if(!db.players.length){g.innerHTML='';e.style.display='block';return;}
+  e.style.display='none';
+  g.innerHTML=db.players.map((p,i)=>{
+    const s=sel.has(p.id);
+    return`<div class="pchip${s?' sel':''}" onclick="toggleSel('${p.id}')">
+      <div class="sel-check"><i class="ti ti-check" style="font-size:10px"></i></div>
+      <button class="pdel" onclick="event.stopPropagation();delPlayer('${p.id}')" title="Ta bort"><i class="ti ti-x"></i></button>
+      ${avEl(p.name,i,44,14)}
+      <div class="pname">${p.name}</div>
+      <div class="psub">${s?'✓ vald':'tryck för att välja'}</div>
+    </div>`;
+  }).join('');
+}
+
+/* ── Game ── */
+function renderGame(){
+  const gc=document.getElementById('gcontent'),w=document.getElementById('gwarn');
+  const sp=db.players.filter(p=>sel.has(p.id));
+  if(sp.length<2){w.style.display='flex';gc.innerHTML='';return;}
+  w.style.display='none';
+  if(!sp.every(p=>cur[p.id])){cur={};sp.forEach(p=>{cur[p.id]=Array(6).fill('');});}
+  gc.innerHTML=ROUNDS.map((r,ri)=>`
+    <div class="rcard">
+      <div class="rcard-head">
+        <div><div class="rcard-title">${r.name}</div><div class="rcard-desc">${r.desc}</div></div>
+        <span class="rpill">${ri+1} / 6</span>
+      </div>
+      ${sp.map(p=>`
+        <div class="srow">
+          <div class="splayer">${avEl(p.name,pidx(p.id),30,11)} ${p.name}</div>
+          <input class="sinput" type="number" inputmode="numeric" placeholder="—"
+            value="${cur[p.id][ri]}" oninput="updScore('${p.id}',${ri},this.value)"/>
+        </div>`).join('')}
+    </div>`).join('')+
+  `<div class="standings">
+    <div class="st-head">Ställning</div>
+    <div id="stbody">${renderStRows(sp)}</div>
+  </div>
+  <button class="save-btn" onclick="saveGame()"><i class="ti ti-device-floppy"></i> Spara spel</button>`;
+}
+function renderStRows(sp){
+  return[...sp].map(p=>({...p,total:gtotal(p.id)})).sort((a,b)=>a.total-b.total).map((p,i)=>`
+    <div class="strow${i===0?' top':''}">
+      <div class="stleft">
+        <span class="strank">${MEDALS[i]||i+1}</span>
+        ${avEl(p.name,pidx(p.id),28,11)}
+        <span class="stname">${p.name}</span>
+      </div>
+      <span class="stscore">${p.total}</span>
+    </div>`).join('');
+}
+function updScore(pid,round,val){
+  cur[pid][round]=val;
+  const sp=db.players.filter(p=>sel.has(p.id));
+  const b=document.getElementById('stbody');
+  if(b)b.innerHTML=renderStRows(sp);
+}
+function saveGame(){
+  const sp=db.players.filter(p=>sel.has(p.id));
+  if(sp.length<2)return;
+  const results=sp.map(p=>({id:p.id,name:p.name,scores:[...cur[p.id]],total:gtotal(p.id)})).sort((a,b)=>a.total-b.total);
+  db.games.push({id:Date.now()+'',date:Date.now(),results});
+  cur={};saveLocal();renderHistory();renderStats();
+  if(cfg.token&&cfg.gistId) doSync('push',true);
+  alert('Spelet är sparat!');
+}
+
+/* ── History ── */
+function renderHistory(){
+  const list=document.getElementById('hlist'),empty=document.getElementById('hempty');
+  if(!db.games.length){list.innerHTML='';empty.style.display='block';return;}
+  empty.style.display='none';
+  list.innerHTML=[...db.games].sort((a,b)=>b.date-a.date).map(g=>{
+    const w=g.results[0];
+    const d=new Date(g.date).toLocaleDateString('sv-SE',{day:'numeric',month:'short',year:'numeric'});
+    return`<div class="gcard" onclick="showDetail('${g.id}')">
+      <div>
+        <div class="gdate">${d}</div>
+        <div class="gplayers">${g.results.map(r=>r.name).join(', ')}</div>
+        <div class="gwinner"><i class="ti ti-trophy" style="font-size:12px"></i>${w.name}</div>
+      </div>
+      <div style="text-align:right">
+        <div class="gscore">${w.total}</div>
+        <div style="font-size:11px;color:var(--text2)">poäng</div>
+        <i class="ti ti-chevron-right" style="font-size:14px;color:var(--text3)"></i>
+      </div>
+    </div>`;
+  }).join('');
+}
+function showDetail(gid){
+  const g=db.games.find(x=>x.id===gid);if(!g)return;
+  document.getElementById('hmain').style.display='none';
+  const d=document.getElementById('hdetail');d.style.display='block';
+  const ds=new Date(g.date).toLocaleDateString('sv-SE',{day:'numeric',month:'short',year:'numeric',hour:'2-digit',minute:'2-digit'});
+  d.innerHTML=`
+  <button class="btn-ghost" onclick="closeDetail()" style="margin-bottom:1rem"><i class="ti ti-arrow-left"></i> Tillbaka</button>
+  <div class="ph"><div class="ph-title">Spelresultat</div><div class="ph-sub">${ds}</div></div>
+  <div class="rcard" style="overflow-x:auto;padding:14px">
+    <table class="det-table">
+      <thead><tr>
+        <th style="width:100px">Spelare</th>
+        ${ROUNDS.map(r=>`<th>${r.desc}</th>`).join('')}
+        <th>Totalt</th>
+      </tr></thead>
+      <tbody>${g.results.map((r,i)=>`<tr>
+        <td>${MEDALS[i]||''} ${r.name}</td>
+        ${r.scores.map(s=>`<td>${(s===''||s===null||s===undefined)?'—':s}</td>`).join('')}
+        <td>${r.total}</td>
+      </tr>`).join('')}</tbody>
+    </table>
+  </div>
+  <button class="btn-danger" onclick="delGame('${g.id}')" style="margin-top:1rem"><i class="ti ti-trash"></i> Ta bort spel</button>`;
+}
+function closeDetail(){document.getElementById('hmain').style.display='block';document.getElementById('hdetail').style.display='none';}
+function delGame(id){
+  if(!confirm('Ta bort detta spel?'))return;
+  db.games=db.games.filter(g=>g.id!==id);saveLocal();closeDetail();renderHistory();renderStats();
+}
+
+/* ── Stats ── */
+function renderStats(){
+  const c=document.getElementById('scontent');
+  if(!db.games.length){c.innerHTML='<div class="empty"><i class="ti ti-chart-bar"></i>Spela och spara spel för att se statistik</div>';return;}
+  const pm={};
+  db.games.forEach(g=>{
+    g.results.forEach((r,i)=>{
+      if(!pm[r.id])pm[r.id]={name:r.name,games:0,wins:0,pts:0,pi:pidx(r.id)};
+      pm[r.id].games++;pm[r.id].pts+=r.total;if(i===0)pm[r.id].wins++;
+    });
+  });
+  const lb=Object.values(pm).sort((a,b)=>b.wins-a.wins||(a.pts/a.games)-(b.pts/b.games));
+  const top=lb[0];
+  c.innerHTML=`
+  <div class="stat-grid">
+    <div class="scard"><div class="scard-label">Antal spel</div><div class="scard-val">${db.games.length}</div></div>
+    <div class="scard"><div class="scard-label">Spelare</div><div class="scard-val">${lb.length}</div></div>
+    <div class="scard"><div class="scard-label">Bästa spelare</div><div class="scard-val" style="font-size:15px">${top?top.name:'—'}</div><div class="scard-sub">${top?top.wins+' vinster':''}</div></div>
+  </div>
+  <div class="sec-label">Topplista</div>
+  <div class="lb-card">
+    ${lb.map((p,i)=>`<div class="lbrow">
+      <div class="lbleft">
+        <span class="lbrank">${MEDALS[i]||i+1}</span>
+        ${avEl(p.name,p.pi>=0?p.pi:i,32,12)}
+        <div><div class="lbname">${p.name}</div><div class="lbsub">snitt ${Math.round(p.pts/p.games)} poäng/spel</div></div>
+      </div>
+      <div><div class="lbwins">${p.wins} vinster</div><div class="lbgames">${p.games} spel</div></div>
+    </div>`).join('')}
+  </div>`;
+}
+
+/* ── Settings Modal ── */
+function openSettings(){
+  document.getElementById('ghToken').value=cfg.token||'';
+  document.getElementById('ghGistId').value=cfg.gistId||'';
+  document.getElementById('syncMsg').innerHTML='';
+  document.getElementById('settingsModal').classList.add('open');
+  updateSyncStatus();
+}
+function closeSettings(){document.getElementById('settingsModal').classList.remove('open');}
+function handleBackdropClick(e){if(e.target===document.getElementById('settingsModal'))closeSettings();}
+function saveSettings(){
+  cfg.token=document.getElementById('ghToken').value.trim();
+  cfg.gistId=document.getElementById('ghGistId').value.trim();
+  saveCfg();updateSyncStatus();
+  showSyncMsg('ok','Inställningar sparade!');
+}
+function copyGistId(){
+  const id=document.getElementById('ghGistId').value.trim();
+  if(!id){showSyncMsg('warn','Inget Gist-ID att kopiera.');return;}
+  navigator.clipboard.writeText(id).then(()=>showSyncMsg('ok','Gist-ID kopierat!')).catch(()=>{});
+}
+function showSyncMsg(type,msg){
+  const el=document.getElementById('syncMsg');
+  if(type==='ok') el.innerHTML=`<div class="ok-box"><i class="ti ti-circle-check"></i>${msg}</div>`;
+  else if(type==='err') el.innerHTML=`<div class="warn"><i class="ti ti-alert-triangle"></i>${msg}</div>`;
+  else el.innerHTML=`<div class="warn"><i class="ti ti-info-circle"></i>${msg}</div>`;
+}
+function updateSyncStatus(){
+  const dot=document.getElementById('syncDot');
+  const lbl=document.getElementById('syncLabel');
+  if(!cfg.token){dot.className='sync-dot';lbl.textContent='Ej konfigurerad';return;}
+  if(!cfg.gistId){dot.className='sync-dot';lbl.textContent='Token OK, inget Gist';return;}
+  dot.className='sync-dot ok';lbl.textContent='Synk aktiv';
+}
+
+/* ── GitHub Gist Sync ── */
+async function doSync(direction, silent=false){
+  const token=document.getElementById('ghToken')?.value.trim()||cfg.token;
+  const gistId=document.getElementById('ghGistId')?.value.trim()||cfg.gistId;
+  if(!token){if(!silent)showSyncMsg('warn','Ange ett GitHub-token.');return;}
+
+  const dot=document.getElementById('syncDot');
+  const lbl=document.getElementById('syncLabel');
+  dot.className='sync-dot spin';lbl.textContent='Synkar...';
+  if(!silent)showSyncMsg('warn','<i class="ti ti-loader ti-spin"></i> Ansluter till GitHub...');
+
+  try{
+    if(direction==='push'){
+      const payload=JSON.stringify(db,null,2);
+      let res,data;
+      if(!gistId){
+        // Create new gist
+        res=await fetch('https://api.github.com/gists',{
+          method:'POST',
+          headers:{'Authorization':'token '+token,'Content-Type':'application/json','Accept':'application/vnd.github+json'},
+          body:JSON.stringify({description:'Kortspelet – speldata',public:false,files:{[GIST_FILENAME]:{content:payload}}})
+        });
+        data=await res.json();
+        if(!res.ok) throw new Error(data.message||'Kunde inte skapa Gist');
+        cfg.gistId=data.id;
+        saveCfg();
+        if(document.getElementById('ghGistId')) document.getElementById('ghGistId').value=data.id;
+        if(!silent)showSyncMsg('ok',`✓ Gist skapat! ID: ${data.id}`);
+      } else {
+        // Update existing gist
+        res=await fetch(`https://api.github.com/gists/${gistId}`,{
+          method:'PATCH',
+          headers:{'Authorization':'token '+token,'Content-Type':'application/json','Accept':'application/vnd.github+json'},
+          body:JSON.stringify({files:{[GIST_FILENAME]:{content:payload}}})
+        });
+        data=await res.json();
+        if(!res.ok) throw new Error(data.message||'Kunde inte uppdatera Gist');
+        if(!silent)showSyncMsg('ok','✓ Data uppladdad till GitHub!');
+      }
+      dot.className='sync-dot ok';lbl.textContent='Uppladdad '+new Date().toLocaleTimeString('sv-SE',{hour:'2-digit',minute:'2-digit'});
+    } else {
+      // Pull
+      if(!gistId){if(!silent)showSyncMsg('err','Ange ett Gist-ID för att ladda ner.');dot.className='sync-dot err';lbl.textContent='Fel';return;}
+      const res=await fetch(`https://api.github.com/gists/${gistId}`,{
+        headers:{'Authorization':'token '+token,'Accept':'application/vnd.github+json'}
+      });
+      const data=await res.json();
+      if(!res.ok) throw new Error(data.message||'Kunde inte hämta Gist');
+      const raw=data.files?.[GIST_FILENAME]?.content;
+      if(!raw) throw new Error('Ingen speldata hittades i Gist');
+      const remote=JSON.parse(raw);
+      // Merge strategy: keep newest games by id, merge players
+      const localGames=new Map(db.games.map(g=>[g.id,g]));
+      (remote.games||[]).forEach(g=>{if(!localGames.has(g.id))localGames.set(g.id,g);});
+      const localPlayers=new Map(db.players.map(p=>[p.id,p]));
+      (remote.players||[]).forEach(p=>{if(!localPlayers.has(p.id))localPlayers.set(p.id,p);});
+      db.games=[...localGames.values()];
+      db.players=[...localPlayers.values()];
+      saveLocal();renderPlayers();renderHistory();renderStats();
+      if(!silent)showSyncMsg('ok','✓ Data hämtad och sammanfogad!');
+      dot.className='sync-dot ok';lbl.textContent='Hämtad '+new Date().toLocaleTimeString('sv-SE',{hour:'2-digit',minute:'2-digit'});
+    }
+  }catch(err){
+    console.error(err);
+    dot.className='sync-dot err';lbl.textContent='Fel vid synk';
+    if(!silent)showSyncMsg('err','Fel: '+err.message);
+  }
+}
+
+/* ── Init ── */
+document.getElementById('npn').addEventListener('keydown',e=>{if(e.key==='Enter')createPlayer();});
+loadLocal();
+renderPlayers();renderHistory();renderStats();
+updateSyncStatus();
+</script>
+</body>
+</html>
