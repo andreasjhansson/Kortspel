@@ -3,16 +3,17 @@
 <head>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>Kortspelet</title>
+<title>Grej å moj & Mas</title>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.7.0/dist/tabler-icons.min.css"/>
-<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23534AB7'/%3E%3Crect x='8' y='14' width='26' height='36' rx='5' fill='white' opacity='0.95'/%3E%3Crect x='20' y='18' width='26' height='36' rx='5' fill='%23EEEdFE' stroke='white' stroke-width='1.5'/%3E%3Ctext x='26' y='40' font-family='serif' font-size='18' font-weight='bold' fill='%23534AB7'%3E%E2%99%A0%3C/text%3E%3Ctext x='11' y='30' font-family='serif' font-size='13' font-weight='bold' fill='%23534AB7'%3EA%3C/text%3E%3C/svg%3E"/>
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23534AB7'/%3E%3Crect x='8' y='15' width='26' height='36' rx='5' fill='white' opacity='0.92'/%3E%3Crect x='20' y='19' width='26' height='36' rx='5' fill='%23EEEDFE' stroke='white' stroke-width='1.5'/%3E%3Ctext x='26' y='42' font-family='serif' font-size='19' font-weight='bold' fill='%23534AB7'%3E%E2%99%A0%3C/text%3E%3Ctext x='22' y='30' font-family='serif' font-size='11' font-weight='bold' fill='%23534AB7'%3EA%3C/text%3E%3C/svg%3E"/>
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
 :root{
   --accent:#534AB7;--accent-light:#EEEDFE;--accent-dark:#26215C;
-  --bg:#ffffff;--bg2:#f6f6f4;--bg3:#efede8;
+  --accent2:#B7534A;--accent2-light:#FEEEED;--accent2-dark:#5C2221;
+  --bg:#fff;--bg2:#f6f6f4;--bg3:#efede8;
   --text:#1a1a1a;--text2:#6b6b6b;--text3:#9a9a9a;
-  --border:rgba(0,0,0,0.1);--border2:rgba(0,0,0,0.2);
+  --border:rgba(0,0,0,.1);--border2:rgba(0,0,0,.2);
   --r:12px;--rm:8px;
   --teal:#0F6E56;--red:#A32D2D;--red-bg:#FCEBEB;
   --warn-bg:#FAEEDA;--warn-text:#633806;
@@ -22,8 +23,9 @@
   :root{
     --bg:#1e1e1e;--bg2:#272727;--bg3:#1a1a1a;
     --text:#e8e8e8;--text2:#a0a0a0;--text3:#5a5a5a;
-    --border:rgba(255,255,255,0.1);--border2:rgba(255,255,255,0.22);
+    --border:rgba(255,255,255,.1);--border2:rgba(255,255,255,.22);
     --accent-light:#2a2660;--accent-dark:#c8c3f8;
+    --accent2-light:#3a1a19;--accent2-dark:#f8c3c0;
     --teal:#5DCAA5;--red:#F09595;--red-bg:#3a1a1a;
     --warn-bg:#3a2e10;--warn-text:#FAC775;
     --green:#5DCAA5;--green-bg:#0d2e24;
@@ -31,7 +33,9 @@
 }
 body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:var(--bg3);color:var(--text);min-height:100vh}
 .shell{max-width:640px;margin:0 auto;padding:1.25rem 1rem 3rem}
-.topbar{display:flex;align-items:center;justify-content:space-between;margin-bottom:1.5rem}
+
+/* topbar */
+.topbar{display:flex;align-items:center;justify-content:space-between;margin-bottom:1.25rem}
 .brand{display:flex;align-items:center;gap:11px}
 .brand-icon{width:38px;height:38px;border-radius:10px;overflow:hidden;flex-shrink:0}
 .brand-icon svg{display:block;width:100%;height:100%}
@@ -40,17 +44,31 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
 .sync-area{display:flex;align-items:center;gap:8px}
 .sync-status{font-size:12px;color:var(--text2);display:flex;align-items:center;gap:5px}
 .sync-dot{width:7px;height:7px;border-radius:50%;background:var(--text3);flex-shrink:0}
-.sync-dot.ok{background:#3BAA77}
-.sync-dot.err{background:#E24B4A}
+.sync-dot.ok{background:#3BAA77}.sync-dot.err{background:#E24B4A}
 .sync-dot.spin{background:var(--accent);animation:pulse 1s infinite}
 @keyframes pulse{0%,100%{opacity:1}50%{opacity:.3}}
-.icon-btn{background:none;border:0.5px solid var(--border);border-radius:var(--rm);width:34px;height:34px;cursor:pointer;display:flex;align-items:center;justify-content:center;color:var(--text2);font-size:16px;transition:all .15s}
+.icon-btn{background:none;border:.5px solid var(--border);border-radius:var(--rm);width:34px;height:34px;cursor:pointer;display:flex;align-items:center;justify-content:center;color:var(--text2);font-size:16px;transition:all .15s}
 .icon-btn:hover{background:var(--bg2);color:var(--text)}
 
-.nav{display:flex;gap:2px;background:var(--bg2);border-radius:var(--r);padding:3px;margin-bottom:1.5rem;border:0.5px solid var(--border)}
+/* game type switcher */
+.gt-bar{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:1.25rem}
+.gt-btn{background:var(--bg);border:.5px solid var(--border);border-radius:var(--r);padding:12px 14px;cursor:pointer;text-align:left;transition:all .15s;font-family:inherit}
+.gt-btn:hover{border-color:var(--border2)}
+.gt-btn.active-ks{border:1.5px solid var(--accent);background:var(--accent-light)}
+.gt-btn.active-s2{border:1.5px solid var(--accent2);background:var(--accent2-light)}
+.gt-icon{font-size:22px;margin-bottom:6px;display:block}
+.gt-name{font-size:13px;font-weight:700;color:var(--text);display:block;margin-bottom:2px}
+.gt-btn.active-ks .gt-name{color:var(--accent-dark)}
+.gt-btn.active-s2 .gt-name{color:var(--accent2-dark)}
+.gt-desc{font-size:11px;color:var(--text2);display:block}
+
+/* nav */
+.nav{display:flex;gap:2px;background:var(--bg2);border-radius:var(--r);padding:3px;margin-bottom:1.5rem;border:.5px solid var(--border)}
 .nav-btn{flex:1;padding:8px 4px;border:none;background:transparent;border-radius:10px;font-size:12px;font-weight:500;color:var(--text2);cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:3px;line-height:1;transition:all .15s}
 .nav-btn i{font-size:17px}
-.nav-btn.active{background:var(--bg);color:var(--accent);border:0.5px solid var(--border);box-shadow:0 1px 3px rgba(0,0,0,.06)}
+.nav-btn.active{background:var(--bg);border:.5px solid var(--border);box-shadow:0 1px 3px rgba(0,0,0,.06)}
+.nav-btn.active.ks{color:var(--accent)}
+.nav-btn.active.s2{color:var(--accent2)}
 
 .section{display:none}.section.active{display:block}
 .ph{margin-bottom:1.25rem}
@@ -58,70 +76,108 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
 .ph-sub{font-size:13px;color:var(--text2)}
 
 /* inputs */
-input[type=text],input[type=password],input[type=number]{padding:9px 12px;border-radius:var(--rm);border:0.5px solid var(--border2);background:var(--bg);color:var(--text);font-size:14px;outline:none;font-family:inherit;width:100%}
+input[type=text],input[type=password],input[type=number]{padding:9px 12px;border-radius:var(--rm);border:.5px solid var(--border2);background:var(--bg);color:var(--text);font-size:14px;outline:none;font-family:inherit;width:100%}
 input:focus{border-color:var(--accent);box-shadow:0 0 0 3px rgba(83,74,183,.14)}
-
 .add-row{display:flex;gap:8px;margin-bottom:1.25rem}
 .add-row input{flex:1;min-width:0;width:auto}
 .btn-primary{background:var(--accent);color:#fff;border:none;border-radius:var(--rm);padding:0 16px;height:38px;font-size:13px;font-weight:600;cursor:pointer;display:inline-flex;align-items:center;gap:6px;white-space:nowrap;transition:opacity .15s;font-family:inherit}
 .btn-primary:hover{opacity:.86}
-.btn-primary:disabled{opacity:.5;cursor:not-allowed}
-.btn-ghost{background:none;border:0.5px solid var(--border2);border-radius:var(--rm);padding:7px 14px;font-size:13px;color:var(--text2);cursor:pointer;display:inline-flex;align-items:center;gap:6px;font-family:inherit;transition:background .12s}
+.btn-ghost{background:none;border:.5px solid var(--border2);border-radius:var(--rm);padding:7px 14px;font-size:13px;color:var(--text2);cursor:pointer;display:inline-flex;align-items:center;gap:6px;font-family:inherit;transition:background .12s}
 .btn-ghost:hover{background:var(--bg2)}
-.btn-danger{background:none;border:0.5px solid var(--border);border-radius:var(--rm);padding:7px 14px;font-size:13px;color:var(--red);cursor:pointer;display:inline-flex;align-items:center;gap:6px;font-family:inherit}
+.btn-danger{background:none;border:.5px solid var(--border);border-radius:var(--rm);padding:7px 14px;font-size:13px;color:var(--red);cursor:pointer;display:inline-flex;align-items:center;gap:6px;font-family:inherit}
 .btn-danger:hover{background:var(--red-bg)}
 
 /* players */
 .pgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(148px,1fr));gap:8px;margin-bottom:1rem}
-.pchip{background:var(--bg);border:0.5px solid var(--border);border-radius:var(--r);padding:14px 12px;display:flex;flex-direction:column;align-items:center;gap:8px;cursor:pointer;transition:all .15s;position:relative}
+.pchip{background:var(--bg);border:.5px solid var(--border);border-radius:var(--r);padding:14px 12px;display:flex;flex-direction:column;align-items:center;gap:8px;cursor:pointer;transition:all .15s;position:relative}
 .pchip:hover{border-color:var(--border2)}
-.pchip.sel{border:1.5px solid var(--accent);background:var(--accent-light)}
-.pchip.sel .pname{color:var(--accent-dark)}
+.pchip.sel{border:1.5px solid var(--cur-accent,var(--accent));background:var(--cur-accent-light,var(--accent-light))}
+.pchip.sel .pname{color:var(--cur-accent-dark,var(--accent-dark))}
 .av{border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:600;flex-shrink:0}
 .pname{font-size:13px;font-weight:600;color:var(--text);text-align:center;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;width:100%}
 .psub{font-size:11px;color:var(--text2)}
 .pdel{position:absolute;top:6px;right:6px;background:none;border:none;cursor:pointer;opacity:0;color:var(--text3);font-size:15px;padding:2px;border-radius:4px;transition:opacity .12s}
 .pchip:hover .pdel{opacity:.7}
 .pdel:hover{opacity:1!important;color:var(--red)}
-.sel-check{position:absolute;top:7px;left:7px;width:17px;height:17px;background:var(--accent);border-radius:50%;display:none;align-items:center;justify-content:center;color:#fff;font-size:10px}
+.sel-check{position:absolute;top:7px;left:7px;width:17px;height:17px;border-radius:50%;display:none;align-items:center;justify-content:center;color:#fff;font-size:10px;background:var(--cur-accent,var(--accent))}
 .pchip.sel .sel-check{display:flex}
+.start-btn{width:100%;padding:16px;color:#fff;border:none;border-radius:var(--r);font-size:16px;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:10px;margin-top:1.25rem;transition:all .15s;font-family:inherit;box-shadow:0 4px 16px rgba(83,74,183,.3)}
+.start-btn:hover{opacity:.9;transform:translateY(-1px)}
+.start-btn:active{transform:translateY(0)}
+.start-btn i{font-size:20px}
+.start-btn-wrap{display:none}.start-btn-wrap.visible{display:block}
+.sel-count{text-align:center;font-size:13px;font-weight:600;margin-top:.75rem}
 
-/* game */
-.rcard{background:var(--bg);border:0.5px solid var(--border);border-radius:var(--r);margin-bottom:8px;overflow:hidden}
-.rcard-head{display:flex;align-items:center;justify-content:space-between;padding:12px 14px;border-bottom:0.5px solid var(--border);background:var(--bg2)}
+/* shared game card */
+.rcard{background:var(--bg);border:.5px solid var(--border);border-radius:var(--r);margin-bottom:8px;overflow:hidden}
+.rcard-head{display:flex;align-items:center;justify-content:space-between;padding:12px 14px;border-bottom:.5px solid var(--border);background:var(--bg2)}
 .rcard-title{font-size:13px;font-weight:600;color:var(--text)}
 .rcard-desc{font-size:12px;color:var(--text2)}
-.rpill{background:var(--accent-light);color:var(--accent-dark);font-size:11px;font-weight:600;padding:3px 9px;border-radius:20px}
-.srow{display:flex;align-items:center;justify-content:space-between;padding:10px 14px;border-bottom:0.5px solid var(--border)}
+.rpill-ks{background:var(--accent-light);color:var(--accent-dark);font-size:11px;font-weight:600;padding:3px 9px;border-radius:20px}
+.rpill-s2{background:var(--accent2-light);color:var(--accent2-dark);font-size:11px;font-weight:600;padding:3px 9px;border-radius:20px}
+.srow{display:flex;align-items:center;justify-content:space-between;padding:10px 14px;border-bottom:.5px solid var(--border)}
 .srow:last-child{border-bottom:none}
 .splayer{display:flex;align-items:center;gap:9px;font-size:13px;font-weight:500;color:var(--text)}
-.sinput{width:68px;text-align:center;font-size:14px;font-weight:600;padding:6px 8px;border-radius:var(--rm);border:0.5px solid var(--border2);background:var(--bg2);color:var(--text);outline:none;transition:border-color .12s}
+.sinput{width:68px;text-align:center;font-size:14px;font-weight:600;padding:6px 8px;border-radius:var(--rm);border:.5px solid var(--border2);background:var(--bg2);color:var(--text);outline:none;transition:border-color .12s}
 .sinput:focus{border-color:var(--accent);background:var(--bg);box-shadow:0 0 0 3px rgba(83,74,183,.12)}
-.standings{border:0.5px solid var(--border);border-radius:var(--r);overflow:hidden;margin:1rem 0}
-.st-head{padding:10px 14px;background:var(--bg2);border-bottom:0.5px solid var(--border);font-size:12px;font-weight:600;color:var(--text2)}
-.strow{display:flex;align-items:center;justify-content:space-between;padding:10px 14px;border-bottom:0.5px solid var(--border)}
+
+/* standings */
+.standings{border:.5px solid var(--border);border-radius:var(--r);overflow:hidden;margin:1rem 0}
+.st-head{padding:10px 14px;background:var(--bg2);border-bottom:.5px solid var(--border);font-size:12px;font-weight:600;color:var(--text2)}
+.strow{display:flex;align-items:center;justify-content:space-between;padding:10px 14px;border-bottom:.5px solid var(--border)}
 .strow:last-child{border-bottom:none}
-.strow.top{background:var(--accent-light)}
+.strow.top-ks{background:var(--accent-light)}
+.strow.top-s2{background:var(--accent2-light)}
 .stleft{display:flex;align-items:center;gap:10px}
 .strank{font-size:16px;width:22px;text-align:center}
 .stname{font-size:13px;font-weight:500;color:var(--text)}
 .stscore{font-size:18px;font-weight:600;color:var(--text)}
-.strow.top .stname,.strow.top .stscore{color:var(--accent-dark)}
-.save-btn{width:100%;padding:13px;background:var(--accent);color:#fff;border:none;border-radius:var(--r);font-size:14px;font-weight:600;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px;margin-top:1rem;transition:opacity .15s;font-family:inherit}
+.strow.top-ks .stname,.strow.top-ks .stscore{color:var(--accent-dark)}
+.strow.top-s2 .stname,.strow.top-s2 .stscore{color:var(--accent2-dark)}
+.save-btn{width:100%;padding:13px;color:#fff;border:none;border-radius:var(--r);font-size:14px;font-weight:600;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px;margin-top:1rem;transition:opacity .15s;font-family:inherit}
 .save-btn:hover{opacity:.86}
 
+/* spel2 specific */
+.round-bar{display:flex;align-items:center;justify-content:space-between;margin-bottom:1rem}
+.round-counter{font-size:22px;font-weight:700;color:var(--text)}
+.round-sub{font-size:13px;color:var(--text2)}
+.lose-row{display:flex;align-items:center;justify-content:space-between;padding:10px 14px;border-bottom:.5px solid var(--border);cursor:pointer;transition:background .12s;user-select:none}
+.lose-row:last-child{border-bottom:none}
+.lose-row:hover{background:var(--bg2)}
+.lose-row.lost{background:var(--accent2-light)}
+.lose-left{display:flex;align-items:center;gap:9px}
+.lose-right{display:flex;align-items:center;gap:10px}
+.lose-pts{font-size:15px;font-weight:700;color:var(--text);min-width:28px;text-align:right}
+.lose-btn{border:none;border-radius:var(--rm);padding:5px 11px;font-size:12px;font-weight:600;cursor:pointer;font-family:inherit;transition:all .12s;white-space:nowrap}
+.lose-btn.no{background:var(--bg3);color:var(--text2);border:.5px solid var(--border)}
+.lose-btn.yes{background:var(--accent2);color:#fff}
+.lose-row.lost .lose-pts{color:var(--accent2-dark)}
+.round-actions{display:flex;gap:8px;margin-top:1rem}
+.round-actions .btn-next{flex:1;padding:13px;background:var(--accent2);color:#fff;border:none;border-radius:var(--r);font-size:14px;font-weight:600;cursor:pointer;font-family:inherit;transition:opacity .15s}
+.round-actions .btn-next:hover{opacity:.86}
+.round-actions .btn-end{padding:13px 16px;background:var(--bg2);color:var(--text2);border:.5px solid var(--border2);border-radius:var(--r);font-size:14px;font-weight:600;cursor:pointer;font-family:inherit;transition:background .12s;display:flex;align-items:center;gap:6px}
+.round-actions .btn-end:hover{background:var(--bg3)}
+.round-history{margin-top:1rem}
+.rh-head{font-size:12px;font-weight:600;color:var(--text2);margin-bottom:.5rem}
+.rh-pills{display:flex;flex-wrap:wrap;gap:5px}
+.rh-pill{font-size:11px;padding:3px 8px;border-radius:20px;background:var(--bg2);color:var(--text2);border:.5px solid var(--border)}
+.rh-pill.had-loss{background:var(--accent2-light);color:var(--accent2-dark);border-color:transparent}
+
 /* history */
-.gcard{background:var(--bg);border:0.5px solid var(--border);border-radius:var(--r);padding:14px;margin-bottom:8px;display:flex;align-items:center;justify-content:space-between;cursor:pointer;transition:all .15s}
+.gcard{background:var(--bg);border:.5px solid var(--border);border-radius:var(--r);padding:14px;margin-bottom:8px;display:flex;align-items:center;justify-content:space-between;cursor:pointer;transition:all .15s}
 .gcard:hover{border-color:var(--border2);background:var(--bg2)}
 .gdate{font-size:11px;color:var(--text2);margin-bottom:3px}
 .gplayers{font-size:13px;font-weight:500;color:var(--text)}
 .gwinner{font-size:12px;color:var(--teal);display:flex;align-items:center;gap:4px;margin-top:2px}
 .gscore{font-size:16px;font-weight:600;color:var(--text)}
+.gtype-badge{font-size:10px;font-weight:600;padding:2px 7px;border-radius:20px;margin-bottom:4px;display:inline-block}
+.gtype-ks{background:var(--accent-light);color:var(--accent-dark)}
+.gtype-s2{background:var(--accent2-light);color:var(--accent2-dark)}
 .det-table{width:100%;border-collapse:collapse;table-layout:fixed;font-size:13px}
 .det-table th{font-size:11px;font-weight:600;color:var(--text2);padding:0 6px 8px;text-align:center}
 .det-table th:first-child{text-align:left;padding-left:0}
 .det-table th:last-child{text-align:right}
-.det-table td{padding:9px 6px;border-top:0.5px solid var(--border);text-align:center;color:var(--text2)}
+.det-table td{padding:9px 6px;border-top:.5px solid var(--border);text-align:center;color:var(--text2)}
 .det-table td:first-child{text-align:left;padding-left:0;font-weight:500;color:var(--text)}
 .det-table td:last-child{font-weight:600;color:var(--text);text-align:right}
 
@@ -131,8 +187,8 @@ input:focus{border-color:var(--accent);box-shadow:0 0 0 3px rgba(83,74,183,.14)}
 .scard-label{font-size:11px;color:var(--text2);margin-bottom:4px}
 .scard-val{font-size:22px;font-weight:600;color:var(--text)}
 .scard-sub{font-size:11px;color:var(--text2);margin-top:2px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-.lb-card{background:var(--bg);border:0.5px solid var(--border);border-radius:var(--r);padding:0 14px}
-.lbrow{display:flex;align-items:center;justify-content:space-between;padding:10px 0;border-bottom:0.5px solid var(--border)}
+.lb-card{background:var(--bg);border:.5px solid var(--border);border-radius:var(--r);padding:0 14px}
+.lbrow{display:flex;align-items:center;justify-content:space-between;padding:10px 0;border-bottom:.5px solid var(--border)}
 .lbrow:last-child{border-bottom:none}
 .lbleft{display:flex;align-items:center;gap:10px}
 .lbrank{font-size:15px;width:24px;text-align:center}
@@ -142,7 +198,7 @@ input:focus{border-color:var(--accent);box-shadow:0 0 0 3px rgba(83,74,183,.14)}
 .lbgames{font-size:11px;color:var(--text2);text-align:right}
 
 /* modal */
-.modal-backdrop{position:fixed;inset:0;background:rgba(0,0,0,.45);z-index:100;display:none;align-items:flex-end;justify-content:center;padding:0}
+.modal-backdrop{position:fixed;inset:0;background:rgba(0,0,0,.45);z-index:100;display:none;align-items:flex-end;justify-content:center}
 .modal-backdrop.open{display:flex}
 @media(min-width:520px){.modal-backdrop{align-items:center;padding:1rem}}
 .modal{background:var(--bg);border-radius:var(--r) var(--r) 0 0;width:100%;max-width:540px;padding:1.5rem 1.25rem 2rem;position:relative}
@@ -166,8 +222,8 @@ input:focus{border-color:var(--accent);box-shadow:0 0 0 3px rgba(83,74,183,.14)}
 .empty i{font-size:32px;display:block;margin-bottom:10px;opacity:.35}
 .warn{background:var(--warn-bg);color:var(--warn-text);font-size:13px;padding:10px 14px;border-radius:var(--rm);margin-bottom:1rem;display:flex;align-items:center;gap:8px}
 .ok-box{background:var(--green-bg);color:var(--green);font-size:13px;padding:10px 14px;border-radius:var(--rm);margin-bottom:1rem;display:flex;align-items:center;gap:8px}
-.sec-label{font-size:12px;font-weight:600;color:var(--text2);margin:1.25rem 0 .6rem;letter-spacing:.01em}
-.divider{border:none;border-top:0.5px solid var(--border);margin:1.25rem 0}
+.sec-label{font-size:12px;font-weight:600;color:var(--text2);margin:1.25rem 0 .6rem}
+.divider{border:none;border-top:.5px solid var(--border);margin:1.25rem 0}
 input[type=number]::-webkit-inner-spin-button,input[type=number]::-webkit-outer-spin-button{-webkit-appearance:none}
 input[type=number]{-moz-appearance:textfield}
 </style>
@@ -181,19 +237,15 @@ input[type=number]{-moz-appearance:textfield}
     <div class="brand-icon">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
         <rect width="64" height="64" rx="14" fill="#534AB7"/>
-        <!-- back card -->
         <rect x="8" y="15" width="26" height="36" rx="5" fill="white" opacity="0.92"/>
-        <!-- front card -->
         <rect x="20" y="19" width="26" height="36" rx="5" fill="#EEEDFE" stroke="white" stroke-width="1.5"/>
-        <!-- spade suit -->
         <text x="26" y="42" font-family="serif" font-size="19" font-weight="bold" fill="#534AB7">♠</text>
-        <!-- A letter -->
         <text x="22" y="30" font-family="serif" font-size="11" font-weight="bold" fill="#534AB7">A</text>
       </svg>
     </div>
     <div>
-      <div class="brand-name">Kortspelet</div>
-      <div class="brand-sub">6 omgångar &middot; poäng &amp; statistik</div>
+      <div class="brand-name">Kortspelen</div>
+      <div class="brand-sub" id="brandSub">Välj spel nedan</div>
     </div>
   </div>
   <div class="sync-area">
@@ -205,28 +257,48 @@ input[type=number]{-moz-appearance:textfield}
   </div>
 </div>
 
+<!-- Game type switcher -->
+<div class="gt-bar">
+  <button class="gt-btn active-ks" id="gt-ks" onclick="switchGame('kortspel')">
+    <span class="gt-icon">🃏</span>
+    <span class="gt-name">Grej å moj</span>
+    <span class="gt-desc">6 omgångar &middot; valfria poäng</span>
+  </button>
+  <button class="gt-btn" id="gt-s2" onclick="switchGame('spel2')">
+    <span class="gt-icon">🎯</span>
+    <span class="gt-name">Mas</span>
+    <span class="gt-desc">1 poäng per förlust</span>
+  </button>
+</div>
+
 <!-- Nav -->
-<div class="nav">
-  <button class="nav-btn active" onclick="nav('players',this)"><i class="ti ti-users"></i>Spelare</button>
-  <button class="nav-btn" onclick="nav('game',this)"><i class="ti ti-device-gamepad-2"></i>Spel</button>
-  <button class="nav-btn" onclick="nav('history',this)"><i class="ti ti-history"></i>Historik</button>
-  <button class="nav-btn" onclick="nav('stats',this)"><i class="ti ti-chart-bar"></i>Statistik</button>
+<div class="nav" id="mainNav">
+  <button class="nav-btn active ks" onclick="nav('players',this)"><i class="ti ti-users"></i>Spelare</button>
+  <button class="nav-btn ks" onclick="nav('game',this)"><i class="ti ti-device-gamepad-2"></i>Spel</button>
+  <button class="nav-btn ks" onclick="nav('history',this)"><i class="ti ti-history"></i>Historik</button>
+  <button class="nav-btn ks" onclick="nav('stats',this)"><i class="ti ti-chart-bar"></i>Statistik</button>
 </div>
 
 <!-- PLAYERS -->
 <div id="s-players" class="section active">
-  <div class="ph"><div class="ph-title">Spelare</div><div class="ph-sub">Välj spelare för nästa spel (lila = vald).</div></div>
+  <div class="ph"><div class="ph-title">Spelare</div><div class="ph-sub">Välj spelare för nästa spel (markerade = valda).</div></div>
   <div class="add-row">
     <input type="text" id="npn" placeholder="Lägg till spelare..." maxlength="20"/>
     <button class="btn-primary" onclick="createPlayer()"><i class="ti ti-plus"></i>Lägg till</button>
   </div>
   <div id="pgrid" class="pgrid"></div>
   <div id="pempty" class="empty" style="display:none"><i class="ti ti-user-plus"></i>Inga spelare ännu — lägg till din första</div>
+  <div class="start-btn-wrap" id="startBtnWrap">
+    <div class="sel-count" id="selCount"></div>
+    <button class="start-btn" id="startBtn" onclick="startGame()">
+      <i class="ti ti-player-play-filled"></i> Starta spel
+    </button>
+  </div>
 </div>
 
 <!-- GAME -->
 <div id="s-game" class="section">
-  <div class="ph"><div class="ph-title">Aktivt spel</div><div class="ph-sub">Fyll i poäng per omgång.</div></div>
+  <div class="ph"><div class="ph-title" id="gameTitle">Aktivt spel</div><div class="ph-sub" id="gameSub"></div></div>
   <div id="gwarn" class="warn" style="display:none"><i class="ti ti-alert-triangle"></i>Välj minst 2 spelare i fliken Spelare.</div>
   <div id="gcontent"></div>
 </div>
@@ -234,7 +306,7 @@ input[type=number]{-moz-appearance:textfield}
 <!-- HISTORY -->
 <div id="s-history" class="section">
   <div id="hmain">
-    <div class="ph"><div class="ph-title">Historik</div><div class="ph-sub">Klicka på ett spel för detaljer.</div></div>
+    <div class="ph"><div class="ph-title">Historik</div><div class="ph-sub" id="histSub"></div></div>
     <div id="hlist"></div>
     <div id="hempty" class="empty" style="display:none"><i class="ti ti-database-off"></i>Inga sparade spel ännu</div>
   </div>
@@ -243,54 +315,47 @@ input[type=number]{-moz-appearance:textfield}
 
 <!-- STATS -->
 <div id="s-stats" class="section">
-  <div class="ph"><div class="ph-title">Statistik</div><div class="ph-sub">Sammanställning av alla spel.</div></div>
+  <div class="ph"><div class="ph-title">Statistik</div><div class="ph-sub" id="statsSub"></div></div>
   <div id="scontent"></div>
 </div>
 
 <!-- SETTINGS MODAL -->
-<div class="modal-backdrop" id="settingsModal" onclick="handleBackdropClick(event)">
+<div class="modal-backdrop" id="settingsModal" onclick="if(event.target===this)closeSettings()">
   <div class="modal">
     <button class="modal-close" onclick="closeSettings()"><i class="ti ti-x"></i></button>
     <div class="modal-title"><i class="ti ti-brand-github" style="font-size:18px;vertical-align:middle;margin-right:6px"></i>GitHub Gist-synk</div>
     <div class="modal-sub">Synka data mellan enheter via ett privat GitHub Gist.</div>
-
     <div class="info-box">
       <strong>Så här fungerar det:</strong><br>
       1. Skapa ett <a href="https://github.com/settings/tokens/new?scopes=gist&description=Kortspelet" target="_blank">GitHub Personal Access Token</a> med <code>gist</code>-behörighet.<br>
-      2. Klistra in token nedan och klicka <strong>Skapa Gist</strong>.<br>
+      2. Klistra in token nedan och klicka <strong>Ladda upp</strong> — ett Gist skapas automatiskt.<br>
       3. Kopiera Gist-ID och ange det på dina andra enheter.
     </div>
-
     <div class="form-group">
       <label class="form-label">GitHub Personal Access Token</label>
       <input type="password" id="ghToken" placeholder="ghp_xxxxxxxxxxxxxxxxxxxx"/>
-      <div class="form-hint">Sparas bara lokalt i webbläsaren. <a href="https://github.com/settings/tokens/new?scopes=gist&description=Kortspelet" target="_blank">Skapa token →</a></div>
+      <div class="form-hint">Sparas bara lokalt. <a href="https://github.com/settings/tokens/new?scopes=gist&description=Kortspelet" target="_blank">Skapa token →</a></div>
     </div>
-
     <div class="form-group">
       <label class="form-label">Gist ID <span style="font-weight:400;color:var(--text3)">(lämna tomt för att skapa nytt)</span></label>
       <div class="copy-row">
         <input type="text" id="ghGistId" placeholder="abc123def456..."/>
-        <button class="icon-btn" onclick="copyGistId()" title="Kopiera Gist-ID"><i class="ti ti-copy"></i></button>
+        <button class="icon-btn" onclick="copyGistId()" title="Kopiera"><i class="ti ti-copy"></i></button>
       </div>
-      <div class="form-hint">Ange samma Gist-ID på alla enheter som ska synka.</div>
+      <div class="form-hint">Ange samma Gist-ID på alla enheter.</div>
     </div>
-
     <div id="syncMsg"></div>
-
     <div class="sync-actions">
       <button class="btn-primary" onclick="doSync('push')"><i class="ti ti-cloud-upload"></i>Ladda upp</button>
-      <button class="btn-primary" onclick="doSync('pull')" style="background:var(--bg2);color:var(--text);border:0.5px solid var(--border2)"><i class="ti ti-cloud-download"></i>Ladda ner</button>
-      <button class="btn-ghost" onclick="saveSettings()"><i class="ti ti-device-floppy"></i>Spara inställningar</button>
+      <button class="btn-primary" onclick="doSync('pull')" style="background:var(--bg2);color:var(--text);border:.5px solid var(--border2)"><i class="ti ti-cloud-download"></i>Ladda ner</button>
+      <button class="btn-ghost" onclick="saveSettings()"><i class="ti ti-device-floppy"></i>Spara</button>
     </div>
-
     <hr class="divider"/>
-    <div style="font-size:12px;color:var(--text3)">Din data lagras i ett <strong>privat</strong> Gist på ditt GitHub-konto. Ingen utomstående kan se den.</div>
+    <div style="font-size:12px;color:var(--text3)">Data lagras i ett <strong>privat</strong> Gist på ditt GitHub-konto.</div>
   </div>
 </div>
 
 </div><!-- /shell -->
-
 <script>
 /* ── Constants ── */
 const ROUNDS=[
@@ -303,37 +368,81 @@ const AV=[
   ['#E6F1FB','#0C447C'],['#FBEAF0','#72243E'],['#FAEEDA','#633806'],
   ['#EAF3DE','#27500A'],['#FCEBEB','#791F1F']
 ];
+const MEDALS=['🥇','🥈','🥉'];
 const KEY='kortspel_app';
 const CFG_KEY='kortspel_cfg';
 const GIST_FILENAME='kortspel_data.json';
-const MEDALS=['🥇','🥈','🥉'];
+const GAME_DEFS={
+  kortspel:{id:'kortspel',name:'Grej å moj',desc:'6 omgångar · valfria poäng',cls:'ks',accentVar:'--accent',lightVar:'--accent-light',darkVar:'--accent-dark'},
+  spel2:{id:'spel2',name:'Mas',desc:'1 poäng per förlust · lägst vinner',cls:'s2',accentVar:'--accent2',lightVar:'--accent2-light',darkVar:'--accent2-dark'}
+};
 
 /* ── State ── */
 let db={players:[],games:[]};
 let sel=new Set();
-let cur={};
+let cur={};         // kortspel scores
+let s2Rounds=[];    // spel2 completed rounds (each = array of losing player ids)
+let s2Current=new Set(); // spel2 current round losers
+let s2Active=false;
+let currentGame='kortspel';
 let cfg={token:'',gistId:''};
 
 /* ── Persistence ── */
 function loadLocal(){
   try{const r=localStorage.getItem(KEY);if(r)db=JSON.parse(r);}catch(e){db={players:[],games:[]};}
+  // migrate old games without type
+  db.games.forEach(g=>{if(!g.type)g.type='kortspel';});
   try{const c=localStorage.getItem(CFG_KEY);if(c)cfg=JSON.parse(c);}catch(e){}
 }
-function saveLocal(){
-  try{localStorage.setItem(KEY,JSON.stringify(db));}catch(e){}
-}
-function saveCfg(){
-  try{localStorage.setItem(CFG_KEY,JSON.stringify(cfg));}catch(e){}
-}
+function saveLocal(){try{localStorage.setItem(KEY,JSON.stringify(db));}catch(e){}}
+function saveCfg(){try{localStorage.setItem(CFG_KEY,JSON.stringify(cfg));}catch(e){}}
 
 /* ── Helpers ── */
 function inits(n){return n.trim().split(/\s+/).map(w=>w[0]).join('').toUpperCase().slice(0,2)||'?';}
 function avc(i){return AV[((i%AV.length)+AV.length)%AV.length];}
 function pidx(id){return db.players.findIndex(p=>p.id===id);}
-function gtotal(id){if(!cur[id])return 0;return cur[id].reduce((s,v)=>{const n=parseInt(v);return s+(isNaN(n)?0:n);},0);}
-function avEl(name,idx,w,fs){const[bg,fg]=avc(idx);return`<div class="av" style="background:${bg};color:${fg};width:${w}px;height:${w}px;font-size:${fs}px">${inits(name)}</div>`;}
+function avEl(name,idx,w,fs){
+  const[bg,fg]=avc(idx);
+  return`<div class="av" style="background:${bg};color:${fg};width:${w}px;height:${w}px;font-size:${fs}px">${inits(name)}</div>`;
+}
+function gdef(){return GAME_DEFS[currentGame];}
+function gGames(){return db.games.filter(g=>g.type===currentGame);}
 
-/* ── Navigation ── */
+/* ── Game type switcher ── */
+function switchGame(type){
+  currentGame=type;
+  const d=gdef();
+  // update gt buttons
+  document.getElementById('gt-ks').className='gt-btn'+(type==='kortspel'?' active-ks':'');
+  document.getElementById('gt-s2').className='gt-btn'+(type==='spel2'?' active-s2':'');
+  // update nav active color class
+  document.querySelectorAll('.nav-btn').forEach(b=>{
+    b.classList.remove('ks','s2');b.classList.add(d.cls);
+  });
+  // update brand sub
+  document.getElementById('brandSub').textContent=d.name+' – '+d.desc;
+  // update CSS custom props for chips
+  document.documentElement.style.setProperty('--cur-accent',`var(${d.accentVar})`);
+  document.documentElement.style.setProperty('--cur-accent-light',`var(${d.lightVar})`);
+  document.documentElement.style.setProperty('--cur-accent-dark',`var(${d.darkVar})`);
+  // update start btn color
+  const btn=document.getElementById('startBtn');
+  btn.style.background=type==='kortspel'?'var(--accent)':'var(--accent2)';
+  btn.style.boxShadow=type==='kortspel'?'0 4px 16px rgba(83,74,183,.3)':'0 4px 16px rgba(183,83,74,.3)';
+  document.getElementById('selCount').style.color=type==='kortspel'?'var(--accent)':'var(--accent2)';
+  // re-render
+  renderPlayers();
+  const activeNavBtn=document.querySelector('.nav-btn.active');
+  const activeSec=document.querySelector('.section.active');
+  if(activeSec){
+    const secId=activeSec.id.replace('s-','');
+    if(secId==='history'){renderHistory();}
+    else if(secId==='stats'){renderStats();}
+    else if(secId==='game'){renderGame();}
+  }
+}
+
+/* ── Nav ── */
 function nav(name,btn){
   document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));
   document.querySelectorAll('.nav-btn').forEach(b=>b.classList.remove('active'));
@@ -359,7 +468,8 @@ function delPlayer(id){
 }
 function renderPlayers(){
   const g=document.getElementById('pgrid'),e=document.getElementById('pempty');
-  if(!db.players.length){g.innerHTML='';e.style.display='block';return;}
+  const wrap=document.getElementById('startBtnWrap'),cnt=document.getElementById('selCount');
+  if(!db.players.length){g.innerHTML='';e.style.display='block';wrap.classList.remove('visible');return;}
   e.style.display='none';
   g.innerHTML=db.players.map((p,i)=>{
     const s=sel.has(p.id);
@@ -371,37 +481,62 @@ function renderPlayers(){
       <div class="psub">${s?'✓ vald':'tryck för att välja'}</div>
     </div>`;
   }).join('');
+  const n=sel.size;
+  if(n>=2){
+    wrap.classList.add('visible');
+    cnt.textContent=n+' spelare valda';
+  } else {
+    wrap.classList.remove('visible');
+    cnt.textContent='';
+  }
+}
+function startGame(){
+  if(sel.size<2)return;
+  cur={};s2Rounds=[];s2Current=new Set();s2Active=false;
+  const gameBtn=document.querySelectorAll('.nav-btn')[1];
+  nav('game',gameBtn);
 }
 
-/* ── Game ── */
+/* ── Game (dispatcher) ── */
 function renderGame(){
-  const gc=document.getElementById('gcontent'),w=document.getElementById('gwarn');
   const sp=db.players.filter(p=>sel.has(p.id));
-  if(sp.length<2){w.style.display='flex';gc.innerHTML='';return;}
-  w.style.display='none';
-  if(!sp.every(p=>cur[p.id])){cur={};sp.forEach(p=>{cur[p.id]=Array(6).fill('');});}
-  gc.innerHTML=ROUNDS.map((r,ri)=>`
-    <div class="rcard">
-      <div class="rcard-head">
-        <div><div class="rcard-title">${r.name}</div><div class="rcard-desc">${r.desc}</div></div>
-        <span class="rpill">${ri+1} / 6</span>
-      </div>
-      ${sp.map(p=>`
-        <div class="srow">
-          <div class="splayer">${avEl(p.name,pidx(p.id),30,11)} ${p.name}</div>
-          <input class="sinput" type="number" inputmode="numeric" placeholder="—"
-            value="${cur[p.id][ri]}" oninput="updScore('${p.id}',${ri},this.value)"/>
-        </div>`).join('')}
-    </div>`).join('')+
-  `<div class="standings">
-    <div class="st-head">Ställning</div>
-    <div id="stbody">${renderStRows(sp)}</div>
-  </div>
-  <button class="save-btn" onclick="saveGame()"><i class="ti ti-device-floppy"></i> Spara spel</button>`;
+  const d=gdef();
+  document.getElementById('gameTitle').textContent=d.name;
+  document.getElementById('gameSub').textContent=d.desc;
+  document.getElementById('gwarn').style.display=sp.length<2?'flex':'none';
+  if(sp.length<2){document.getElementById('gcontent').innerHTML='';return;}
+  if(currentGame==='kortspel')renderKortspelGame(sp);
+  else renderSpel2Game(sp);
 }
-function renderStRows(sp){
-  return[...sp].map(p=>({...p,total:gtotal(p.id)})).sort((a,b)=>a.total-b.total).map((p,i)=>`
-    <div class="strow${i===0?' top':''}">
+
+/* ── Kortspel ── */
+function renderKortspelGame(sp){
+  if(!sp.every(p=>cur[p.id])){cur={};sp.forEach(p=>{cur[p.id]=Array(6).fill('');});}
+  document.getElementById('gcontent').innerHTML=
+    ROUNDS.map((r,ri)=>`
+      <div class="rcard">
+        <div class="rcard-head">
+          <div><div class="rcard-title">${r.name}</div><div class="rcard-desc">${r.desc}</div></div>
+          <span class="rpill-ks">${ri+1} / 6</span>
+        </div>
+        ${sp.map(p=>`
+          <div class="srow">
+            <div class="splayer">${avEl(p.name,pidx(p.id),30,11)} ${p.name}</div>
+            <input class="sinput" type="number" inputmode="numeric" placeholder="—"
+              value="${cur[p.id][ri]}" oninput="updKsScore('${p.id}',${ri},this.value)"/>
+          </div>`).join('')}
+      </div>`).join('')+
+    `<div class="standings">
+      <div class="st-head">Ställning</div>
+      <div id="stbody">${ksStRows(sp)}</div>
+    </div>
+    <button class="save-btn" style="background:var(--accent)" onclick="saveKortspel()">
+      <i class="ti ti-device-floppy"></i> Spara spel
+    </button>`;
+}
+function ksStRows(sp){
+  return[...sp].map(p=>({...p,total:ksTot(p.id)})).sort((a,b)=>a.total-b.total).map((p,i)=>`
+    <div class="strow${i===0?' top-ks':''}">
       <div class="stleft">
         <span class="strank">${MEDALS[i]||i+1}</span>
         ${avEl(p.name,pidx(p.id),28,11)}
@@ -410,39 +545,144 @@ function renderStRows(sp){
       <span class="stscore">${p.total}</span>
     </div>`).join('');
 }
-function updScore(pid,round,val){
+function ksTot(id){if(!cur[id])return 0;return cur[id].reduce((s,v)=>{const n=parseInt(v);return s+(isNaN(n)?0:n);},0);}
+function updKsScore(pid,round,val){
   cur[pid][round]=val;
   const sp=db.players.filter(p=>sel.has(p.id));
-  const b=document.getElementById('stbody');
-  if(b)b.innerHTML=renderStRows(sp);
+  const b=document.getElementById('stbody');if(b)b.innerHTML=ksStRows(sp);
 }
-function saveGame(){
-  const sp=db.players.filter(p=>sel.has(p.id));
-  if(sp.length<2)return;
-  const results=sp.map(p=>({id:p.id,name:p.name,scores:[...cur[p.id]],total:gtotal(p.id)})).sort((a,b)=>a.total-b.total);
-  db.games.push({id:Date.now()+'',date:Date.now(),results});
+function saveKortspel(){
+  const sp=db.players.filter(p=>sel.has(p.id));if(sp.length<2)return;
+  const results=sp.map(p=>({id:p.id,name:p.name,scores:[...cur[p.id]],total:ksTot(p.id)})).sort((a,b)=>a.total-b.total);
+  db.games.push({id:Date.now()+'',date:Date.now(),type:'kortspel',results});
   cur={};saveLocal();renderHistory();renderStats();
-  if(cfg.token&&cfg.gistId) doSync('push',true);
+  if(cfg.token&&cfg.gistId)doSync('push',true);
+  alert('Spelet är sparat!');
+}
+
+/* ── Spel 2 ── */
+function s2Tots(sp){
+  const t={};sp.forEach(p=>{t[p.id]=0;});
+  s2Rounds.forEach(r=>r.forEach(id=>{if(id in t)t[id]++;}));
+  return t;
+}
+function renderSpel2Game(sp){
+  const gc=document.getElementById('gcontent');
+  if(!s2Active){
+    gc.innerHTML=`
+      <div class="rcard" style="padding:1.5rem;text-align:center">
+        <div style="font-size:36px;margin-bottom:12px">🎯</div>
+        <div style="font-size:15px;font-weight:600;color:var(--text);margin-bottom:6px">Redo att spela?</div>
+        <div style="font-size:13px;color:var(--text2);margin-bottom:1.25rem">Markera vem som förlorar varje omgång — de får 1 poäng. Lägst antal poäng vinner.</div>
+        <button class="save-btn" style="background:var(--accent2);margin-top:0" onclick="beginSpel2()">
+          <i class="ti ti-player-play-filled"></i> Starta
+        </button>
+      </div>`;
+    return;
+  }
+  const tots=s2Tots(sp);
+  const sorted=[...sp].map(p=>({...p,total:tots[p.id]||0})).sort((a,b)=>a.total-b.total);
+  const roundNum=s2Rounds.length+1;
+  gc.innerHTML=`
+    <div class="round-bar">
+      <div>
+        <div class="round-counter">Omgång ${roundNum}</div>
+        <div class="round-sub">Markera vem som förlorade</div>
+      </div>
+      <span class="rpill-s2">${s2Rounds.length} spelade</span>
+    </div>
+    <div class="rcard">
+      ${sp.map(p=>{
+        const lost=s2Current.has(p.id);
+        return`<div class="lose-row${lost?' lost':''}" onclick="toggleS2Loser('${p.id}')">
+          <div class="lose-left">${avEl(p.name,pidx(p.id),30,11)}
+            <span style="font-size:13px;font-weight:500;color:var(--text)">${p.name}</span>
+          </div>
+          <div class="lose-right">
+            <span class="lose-pts">${tots[p.id]||0} p</span>
+            <button class="lose-btn ${lost?'yes':'no'}" onclick="event.stopPropagation();toggleS2Loser('${p.id}')">
+              ${lost?'✓ Förlorade':'Förlorade?'}
+            </button>
+          </div>
+        </div>`;
+      }).join('')}
+    </div>
+    <div class="round-actions">
+      <button class="btn-next" onclick="s2NextRound()"><i class="ti ti-arrow-right" style="font-size:16px"></i> Nästa omgång</button>
+      <button class="btn-end" onclick="saveSpel2()"><i class="ti ti-device-floppy" style="font-size:16px"></i> Avsluta &amp; spara</button>
+    </div>
+    <div class="standings" style="margin-top:1.25rem">
+      <div class="st-head">Ställning (lägst poäng vinner)</div>
+      ${sorted.map((p,i)=>`
+        <div class="strow${i===0?' top-s2':''}">
+          <div class="stleft">
+            <span class="strank">${MEDALS[i]||i+1}</span>
+            ${avEl(p.name,pidx(p.id),28,11)}
+            <span class="stname">${p.name}</span>
+          </div>
+          <span class="stscore">${p.total} p</span>
+        </div>`).join('')}
+    </div>
+    ${s2Rounds.length>0?`
+    <div class="round-history">
+      <div class="rh-head">Omgångshistorik</div>
+      <div class="rh-pills">
+        ${s2Rounds.map((r,i)=>`<span class="rh-pill${r.length>0?' had-loss':''}">R${i+1}: ${r.length===0?'ingen förlust':r.map(id=>{const p=db.players.find(x=>x.id===id);return p?p.name:id;}).join(', ')}</span>`).join('')}
+      </div>
+    </div>`:''}`;
+}
+function beginSpel2(){s2Active=true;s2Rounds=[];s2Current=new Set();renderGame();}
+function toggleS2Loser(id){
+  s2Current.has(id)?s2Current.delete(id):s2Current.add(id);
+  renderGame();
+}
+function s2NextRound(){
+  s2Rounds.push([...s2Current]);
+  s2Current=new Set();
+  renderGame();
+}
+function saveSpel2(){
+  if(s2Rounds.length===0&&s2Current.size===0){alert('Spela minst en omgång!');return;}
+  // include current round if any losers marked
+  const allRounds=[...s2Rounds];
+  if(s2Current.size>0)allRounds.push([...s2Current]);
+  const sp=db.players.filter(p=>sel.has(p.id));
+  const tots={};sp.forEach(p=>{tots[p.id]=0;});
+  allRounds.forEach(r=>r.forEach(id=>{if(id in tots)tots[id]++;}));
+  const results=sp.map(p=>({
+    id:p.id,name:p.name,
+    rounds:allRounds.length,
+    losses:tots[p.id]||0,
+    total:tots[p.id]||0
+  })).sort((a,b)=>a.total-b.total);
+  db.games.push({id:Date.now()+'',date:Date.now(),type:'spel2',results,rounds:allRounds});
+  s2Active=false;s2Rounds=[];s2Current=new Set();
+  saveLocal();renderHistory();renderStats();
+  if(cfg.token&&cfg.gistId)doSync('push',true);
   alert('Spelet är sparat!');
 }
 
 /* ── History ── */
 function renderHistory(){
+  const d=gdef();
+  document.getElementById('histSub').textContent=d.name+' – sparade spel';
   const list=document.getElementById('hlist'),empty=document.getElementById('hempty');
-  if(!db.games.length){list.innerHTML='';empty.style.display='block';return;}
+  const games=gGames();
+  if(!games.length){list.innerHTML='';empty.style.display='block';return;}
   empty.style.display='none';
-  list.innerHTML=[...db.games].sort((a,b)=>b.date-a.date).map(g=>{
+  list.innerHTML=[...games].sort((a,b)=>b.date-a.date).map(g=>{
     const w=g.results[0];
-    const d=new Date(g.date).toLocaleDateString('sv-SE',{day:'numeric',month:'short',year:'numeric'});
+    const dat=new Date(g.date).toLocaleDateString('sv-SE',{day:'numeric',month:'short',year:'numeric'});
+    const scoreLabel=g.type==='spel2'?w.total+' förluster':w.total+' poäng';
     return`<div class="gcard" onclick="showDetail('${g.id}')">
       <div>
-        <div class="gdate">${d}</div>
+        <div class="gdate">${dat}</div>
         <div class="gplayers">${g.results.map(r=>r.name).join(', ')}</div>
         <div class="gwinner"><i class="ti ti-trophy" style="font-size:12px"></i>${w.name}</div>
       </div>
       <div style="text-align:right">
         <div class="gscore">${w.total}</div>
-        <div style="font-size:11px;color:var(--text2)">poäng</div>
+        <div style="font-size:11px;color:var(--text2)">${g.type==='spel2'?'förluster':'poäng'}</div>
         <i class="ti ti-chevron-right" style="font-size:14px;color:var(--text3)"></i>
       </div>
     </div>`;
@@ -451,26 +691,35 @@ function renderHistory(){
 function showDetail(gid){
   const g=db.games.find(x=>x.id===gid);if(!g)return;
   document.getElementById('hmain').style.display='none';
-  const d=document.getElementById('hdetail');d.style.display='block';
+  const det=document.getElementById('hdetail');det.style.display='block';
   const ds=new Date(g.date).toLocaleDateString('sv-SE',{day:'numeric',month:'short',year:'numeric',hour:'2-digit',minute:'2-digit'});
-  d.innerHTML=`
-  <button class="btn-ghost" onclick="closeDetail()" style="margin-bottom:1rem"><i class="ti ti-arrow-left"></i> Tillbaka</button>
-  <div class="ph"><div class="ph-title">Spelresultat</div><div class="ph-sub">${ds}</div></div>
-  <div class="rcard" style="overflow-x:auto;padding:14px">
-    <table class="det-table">
-      <thead><tr>
-        <th style="width:100px">Spelare</th>
-        ${ROUNDS.map(r=>`<th>${r.desc}</th>`).join('')}
-        <th>Totalt</th>
-      </tr></thead>
+  let tableHtml='';
+  if(g.type==='kortspel'){
+    tableHtml=`<table class="det-table">
+      <thead><tr><th style="width:100px">Spelare</th>${ROUNDS.map(r=>`<th>${r.desc}</th>`).join('')}<th>Totalt</th></tr></thead>
       <tbody>${g.results.map((r,i)=>`<tr>
         <td>${MEDALS[i]||''} ${r.name}</td>
-        ${r.scores.map(s=>`<td>${(s===''||s===null||s===undefined)?'—':s}</td>`).join('')}
+        ${(r.scores||[]).map(s=>`<td>${(s===''||s==null)?'—':s}</td>`).join('')}
         <td>${r.total}</td>
       </tr>`).join('')}</tbody>
-    </table>
-  </div>
-  <button class="btn-danger" onclick="delGame('${g.id}')" style="margin-top:1rem"><i class="ti ti-trash"></i> Ta bort spel</button>`;
+    </table>`;
+  } else {
+    const rds=g.rounds||[];
+    tableHtml=`<table class="det-table">
+      <thead><tr><th>Spelare</th><th>Förluster</th><th>Omgångar</th><th>Totalt</th></tr></thead>
+      <tbody>${g.results.map((r,i)=>`<tr>
+        <td>${MEDALS[i]||''} ${r.name}</td>
+        <td>${r.losses||r.total}</td>
+        <td>${r.rounds||rds.length}</td>
+        <td>${r.total}</td>
+      </tr>`).join('')}</tbody>
+    </table>`;
+  }
+  det.innerHTML=`
+    <button class="btn-ghost" onclick="closeDetail()" style="margin-bottom:1rem"><i class="ti ti-arrow-left"></i> Tillbaka</button>
+    <div class="ph"><div class="ph-title">Spelresultat</div><div class="ph-sub">${ds}</div></div>
+    <div class="rcard" style="overflow-x:auto;padding:14px">${tableHtml}</div>
+    <button class="btn-danger" onclick="delGame('${g.id}')" style="margin-top:1rem"><i class="ti ti-trash"></i> Ta bort spel</button>`;
 }
 function closeDetail(){document.getElementById('hmain').style.display='block';document.getElementById('hdetail').style.display='none';}
 function delGame(id){
@@ -480,46 +729,56 @@ function delGame(id){
 
 /* ── Stats ── */
 function renderStats(){
+  const d=gdef();
+  document.getElementById('statsSub').textContent=d.name+' – sammanställning';
   const c=document.getElementById('scontent');
-  if(!db.games.length){c.innerHTML='<div class="empty"><i class="ti ti-chart-bar"></i>Spela och spara spel för att se statistik</div>';return;}
+  const games=gGames();
+  if(!games.length){c.innerHTML='<div class="empty"><i class="ti ti-chart-bar"></i>Spela och spara spel för att se statistik</div>';return;}
   const pm={};
-  db.games.forEach(g=>{
+  games.forEach(g=>{
     g.results.forEach((r,i)=>{
       if(!pm[r.id])pm[r.id]={name:r.name,games:0,wins:0,pts:0,pi:pidx(r.id)};
       pm[r.id].games++;pm[r.id].pts+=r.total;if(i===0)pm[r.id].wins++;
     });
   });
-  const lb=Object.values(pm).sort((a,b)=>b.wins-a.wins||(a.pts/a.games)-(b.pts/b.games));
+  const isS2=currentGame==='spel2';
+  const lb=Object.values(pm).sort((a,b)=>b.wins-a.wins||(isS2?(a.pts/a.games)-(b.pts/b.games):(a.pts/a.games)-(b.pts/b.games)));
   const top=lb[0];
+  const accentColor=isS2?'var(--accent2)':'var(--accent)';
   c.innerHTML=`
   <div class="stat-grid">
-    <div class="scard"><div class="scard-label">Antal spel</div><div class="scard-val">${db.games.length}</div></div>
+    <div class="scard"><div class="scard-label">Antal spel</div><div class="scard-val">${games.length}</div></div>
     <div class="scard"><div class="scard-label">Spelare</div><div class="scard-val">${lb.length}</div></div>
-    <div class="scard"><div class="scard-label">Bästa spelare</div><div class="scard-val" style="font-size:15px">${top?top.name:'—'}</div><div class="scard-sub">${top?top.wins+' vinster':''}</div></div>
+    <div class="scard"><div class="scard-label">Flest vinster</div><div class="scard-val" style="font-size:15px">${top?top.name:'—'}</div><div class="scard-sub">${top?top.wins+' vinster':''}</div></div>
   </div>
   <div class="sec-label">Topplista</div>
   <div class="lb-card">
-    ${lb.map((p,i)=>`<div class="lbrow">
+    ${lb.map((p,i)=>{const[bg,fg]=avc(p.pi>=0?p.pi:i);return`
+    <div class="lbrow">
       <div class="lbleft">
         <span class="lbrank">${MEDALS[i]||i+1}</span>
-        ${avEl(p.name,p.pi>=0?p.pi:i,32,12)}
-        <div><div class="lbname">${p.name}</div><div class="lbsub">snitt ${Math.round(p.pts/p.games)} poäng/spel</div></div>
+        <div class="av" style="background:${bg};color:${fg};width:32px;height:32px;font-size:12px">${inits(p.name)}</div>
+        <div>
+          <div class="lbname">${p.name}</div>
+          <div class="lbsub">snitt ${(p.pts/p.games).toFixed(1)} ${isS2?'förluster':'poäng'}/spel</div>
+        </div>
       </div>
-      <div><div class="lbwins">${p.wins} vinster</div><div class="lbgames">${p.games} spel</div></div>
-    </div>`).join('')}
+      <div>
+        <div class="lbwins">${p.wins} vinster</div>
+        <div class="lbgames">${p.games} spel</div>
+      </div>
+    </div>`;}).join('')}
   </div>`;
 }
 
-/* ── Settings Modal ── */
+/* ── Settings ── */
 function openSettings(){
   document.getElementById('ghToken').value=cfg.token||'';
   document.getElementById('ghGistId').value=cfg.gistId||'';
   document.getElementById('syncMsg').innerHTML='';
   document.getElementById('settingsModal').classList.add('open');
-  updateSyncStatus();
 }
 function closeSettings(){document.getElementById('settingsModal').classList.remove('open');}
-function handleBackdropClick(e){if(e.target===document.getElementById('settingsModal'))closeSettings();}
 function saveSettings(){
   cfg.token=document.getElementById('ghToken').value.trim();
   cfg.gistId=document.getElementById('ghGistId').value.trim();
@@ -533,82 +792,66 @@ function copyGistId(){
 }
 function showSyncMsg(type,msg){
   const el=document.getElementById('syncMsg');
-  if(type==='ok') el.innerHTML=`<div class="ok-box"><i class="ti ti-circle-check"></i>${msg}</div>`;
-  else if(type==='err') el.innerHTML=`<div class="warn"><i class="ti ti-alert-triangle"></i>${msg}</div>`;
-  else el.innerHTML=`<div class="warn"><i class="ti ti-info-circle"></i>${msg}</div>`;
+  if(type==='ok')el.innerHTML=`<div class="ok-box"><i class="ti ti-circle-check"></i>${msg}</div>`;
+  else el.innerHTML=`<div class="warn"><i class="ti ti-alert-triangle"></i>${msg}</div>`;
 }
 function updateSyncStatus(){
-  const dot=document.getElementById('syncDot');
-  const lbl=document.getElementById('syncLabel');
+  const dot=document.getElementById('syncDot'),lbl=document.getElementById('syncLabel');
   if(!cfg.token){dot.className='sync-dot';lbl.textContent='Ej konfigurerad';return;}
   if(!cfg.gistId){dot.className='sync-dot';lbl.textContent='Token OK, inget Gist';return;}
   dot.className='sync-dot ok';lbl.textContent='Synk aktiv';
 }
 
 /* ── GitHub Gist Sync ── */
-async function doSync(direction, silent=false){
+async function doSync(direction,silent=false){
   const token=document.getElementById('ghToken')?.value.trim()||cfg.token;
   const gistId=document.getElementById('ghGistId')?.value.trim()||cfg.gistId;
   if(!token){if(!silent)showSyncMsg('warn','Ange ett GitHub-token.');return;}
-
-  const dot=document.getElementById('syncDot');
-  const lbl=document.getElementById('syncLabel');
+  const dot=document.getElementById('syncDot'),lbl=document.getElementById('syncLabel');
   dot.className='sync-dot spin';lbl.textContent='Synkar...';
-  if(!silent)showSyncMsg('warn','<i class="ti ti-loader ti-spin"></i> Ansluter till GitHub...');
-
+  if(!silent)showSyncMsg('warn','Ansluter till GitHub...');
   try{
     if(direction==='push'){
       const payload=JSON.stringify(db,null,2);
       let res,data;
       if(!gistId){
-        // Create new gist
-        res=await fetch('https://api.github.com/gists',{
-          method:'POST',
+        res=await fetch('https://api.github.com/gists',{method:'POST',
           headers:{'Authorization':'token '+token,'Content-Type':'application/json','Accept':'application/vnd.github+json'},
-          body:JSON.stringify({description:'Kortspelet – speldata',public:false,files:{[GIST_FILENAME]:{content:payload}}})
-        });
+          body:JSON.stringify({description:'Grej å moj & Mas – speldata',public:false,files:{[GIST_FILENAME]:{content:payload}}})});
         data=await res.json();
-        if(!res.ok) throw new Error(data.message||'Kunde inte skapa Gist');
-        cfg.gistId=data.id;
-        saveCfg();
-        if(document.getElementById('ghGistId')) document.getElementById('ghGistId').value=data.id;
-        if(!silent)showSyncMsg('ok',`✓ Gist skapat! ID: ${data.id}`);
+        if(!res.ok)throw new Error(data.message||'Kunde inte skapa Gist');
+        cfg.gistId=data.id;saveCfg();
+        if(document.getElementById('ghGistId'))document.getElementById('ghGistId').value=data.id;
+        if(!silent)showSyncMsg('ok','✓ Gist skapat! ID: '+data.id);
       } else {
-        // Update existing gist
-        res=await fetch(`https://api.github.com/gists/${gistId}`,{
-          method:'PATCH',
+        res=await fetch(`https://api.github.com/gists/${gistId}`,{method:'PATCH',
           headers:{'Authorization':'token '+token,'Content-Type':'application/json','Accept':'application/vnd.github+json'},
-          body:JSON.stringify({files:{[GIST_FILENAME]:{content:payload}}})
-        });
+          body:JSON.stringify({files:{[GIST_FILENAME]:{content:payload}}})});
         data=await res.json();
-        if(!res.ok) throw new Error(data.message||'Kunde inte uppdatera Gist');
-        if(!silent)showSyncMsg('ok','✓ Data uppladdad till GitHub!');
+        if(!res.ok)throw new Error(data.message||'Kunde inte uppdatera Gist');
+        if(!silent)showSyncMsg('ok','✓ Data uppladdad!');
       }
       dot.className='sync-dot ok';lbl.textContent='Uppladdad '+new Date().toLocaleTimeString('sv-SE',{hour:'2-digit',minute:'2-digit'});
     } else {
-      // Pull
-      if(!gistId){if(!silent)showSyncMsg('err','Ange ett Gist-ID för att ladda ner.');dot.className='sync-dot err';lbl.textContent='Fel';return;}
-      const res=await fetch(`https://api.github.com/gists/${gistId}`,{
-        headers:{'Authorization':'token '+token,'Accept':'application/vnd.github+json'}
-      });
+      if(!gistId){if(!silent)showSyncMsg('err','Ange Gist-ID.');dot.className='sync-dot err';lbl.textContent='Fel';return;}
+      const res=await fetch(`https://api.github.com/gists/${gistId}`,{headers:{'Authorization':'token '+token,'Accept':'application/vnd.github+json'}});
       const data=await res.json();
-      if(!res.ok) throw new Error(data.message||'Kunde inte hämta Gist');
+      if(!res.ok)throw new Error(data.message||'Kunde inte hämta Gist');
       const raw=data.files?.[GIST_FILENAME]?.content;
-      if(!raw) throw new Error('Ingen speldata hittades i Gist');
+      if(!raw)throw new Error('Ingen speldata hittades');
       const remote=JSON.parse(raw);
-      // Merge strategy: keep newest games by id, merge players
-      const localGames=new Map(db.games.map(g=>[g.id,g]));
-      (remote.games||[]).forEach(g=>{if(!localGames.has(g.id))localGames.set(g.id,g);});
-      const localPlayers=new Map(db.players.map(p=>[p.id,p]));
-      (remote.players||[]).forEach(p=>{if(!localPlayers.has(p.id))localPlayers.set(p.id,p);});
-      db.games=[...localGames.values()];
-      db.players=[...localPlayers.values()];
+      const lg=new Map(db.games.map(g=>[g.id,g]));
+      (remote.games||[]).forEach(g=>{if(!lg.has(g.id))lg.set(g.id,g);});
+      const lp=new Map(db.players.map(p=>[p.id,p]));
+      (remote.players||[]).forEach(p=>{if(!lp.has(p.id))lp.set(p.id,p);});
+      db.games=[...lg.values()];db.players=[...lp.values()];
+      // migrate
+      db.games.forEach(g=>{if(!g.type)g.type='kortspel';});
       saveLocal();renderPlayers();renderHistory();renderStats();
       if(!silent)showSyncMsg('ok','✓ Data hämtad och sammanfogad!');
       dot.className='sync-dot ok';lbl.textContent='Hämtad '+new Date().toLocaleTimeString('sv-SE',{hour:'2-digit',minute:'2-digit'});
     }
   }catch(err){
-    console.error(err);
     dot.className='sync-dot err';lbl.textContent='Fel vid synk';
     if(!silent)showSyncMsg('err','Fel: '+err.message);
   }
@@ -617,6 +860,7 @@ async function doSync(direction, silent=false){
 /* ── Init ── */
 document.getElementById('npn').addEventListener('keydown',e=>{if(e.key==='Enter')createPlayer();});
 loadLocal();
+switchGame('kortspel');
 renderPlayers();renderHistory();renderStats();
 updateSyncStatus();
 </script>
